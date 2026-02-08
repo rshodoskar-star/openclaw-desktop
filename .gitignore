@@ -7,4 +7,3 @@ release/
 .env*
 aegis-config.json
 _old/
-*.png
