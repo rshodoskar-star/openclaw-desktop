@@ -3,10 +3,10 @@
 ; Advanced Executive General Intelligence System
 ; ═══════════════════════════════════════════════════════════
 
-; ── Language Selection on startup ──
-!macro customInit
-  !insertmacro MUI_LANGDLL_DISPLAY
-!macroend
+; ── Language Selection ──
+; NOTE: electron-builder handles MUI_LANGDLL_DISPLAY automatically
+; when installerLanguages has multiple entries in package.json.
+; Do NOT add it here — it causes a duplicate dialog (before + after UAC).
 
 ; ── Custom Welcome Page Text ──
 !macro customWelcomePage

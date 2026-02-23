@@ -6,6 +6,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [5.3.2] — 2026-02-23
+
+### Fixed
+- **Installer language not applied** — app opened in Arabic regardless of installer language choice; now the selected language flows from NSIS → main process → preload → renderer synchronously before first render
+- **Duplicate language dialog** — installer showed language selection twice (before and after UAC elevation); removed redundant `MUI_LANGDLL_DISPLAY` — electron-builder handles it automatically
+- **Language persistence across reinstalls** — version-aware detection ensures a fresh install respects the installer language choice even when old preferences exist in localStorage
+
+### Changed
+- **Default language** — English is now the default when no installer language or saved preference is found; users can switch to Arabic from Settings
+
+---
+
 ## [5.3.1] — 2026-02-23
 
 ### Fixed

@@ -1,6 +1,6 @@
 {
   "name": "aegis-desktop",
-  "version": "5.3.1",
+  "version": "5.3.2",
   "description": "AEGIS Desktop — Advanced Chat Client for OpenClaw Gateway",
   "main": "dist-electron/main.js",
   "author": "Rashed",

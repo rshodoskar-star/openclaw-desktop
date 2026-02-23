@@ -4,7 +4,15 @@ import { contextBridge, ipcRenderer } from 'electron';
 // AEGIS Desktop — Preload Bridge
 // ═══════════════════════════════════════════════════════════
 
+// Read installer language from process.argv (passed via additionalArguments in main.ts)
+// This works in sandbox mode — no fs/path needed
+const langArg = process.argv.find(a => a.startsWith('--installer-lang='));
+const installerLanguage: string | null = langArg ? langArg.split('=')[1] : null;
+
 const api = {
+  // ── Installer Language (sync, available immediately) ──
+  installerLanguage,
+
   // ── Window Controls ──
   window: {
     minimize: () => ipcRenderer.invoke('window:minimize'),

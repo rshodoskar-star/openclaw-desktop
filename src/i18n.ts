@@ -7,14 +7,35 @@ import en from './locales/en.json';
 // i18n — Internationalization (Arabic + English)
 // ═══════════════════════════════════════════════════════════
 
-// Detect language: localStorage > system language > default 'en'
+// Detect language priority:
+//   1. New install/upgrade: installer language wins (user chose it in setup wizard)
+//   2. Normal run: localStorage wins (user may have changed it in Settings)
+//   3. First run (dev/no installer): system language
+//   4. Fallback: 'en'
 const getInitialLang = (): string => {
   const stored = localStorage.getItem('aegis-language');
-  if (stored === 'ar' || stored === 'en') return stored;
+  const installerLang = (window as any).aegis?.installerLanguage as string | null;
+  const currentVersion = (window as any).__APP_VERSION__ || '';
+  const lastVersion = localStorage.getItem('aegis-installed-version');
 
-  // Auto-detect from system/browser language
-  const sysLang = navigator.language || navigator.languages?.[0] || '';
-  if (sysLang.startsWith('ar')) return 'ar';
+  // New install or upgrade: installer language takes priority
+  // (The NSIS wizard asks the user every time — respect that choice)
+  if (installerLang && (installerLang === 'ar' || installerLang === 'en') && lastVersion !== currentVersion) {
+    localStorage.setItem('aegis-language', installerLang);
+    localStorage.setItem('aegis-installed-version', currentVersion);
+    return installerLang;
+  }
+
+  // Normal run: use saved preference
+  if (stored === 'ar' || stored === 'en') {
+    // Sync version marker if missing
+    if (!lastVersion && currentVersion) localStorage.setItem('aegis-installed-version', currentVersion);
+    return stored;
+  }
+
+  // Default: English (user can switch to Arabic from Settings)
+  localStorage.setItem('aegis-language', 'en');
+  if (currentVersion) localStorage.setItem('aegis-installed-version', currentVersion);
   return 'en';
 };
 

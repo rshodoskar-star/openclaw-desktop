@@ -159,6 +159,18 @@ let previewWindow: BrowserWindow | null = null;
 let splashWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
 
+// Installer language (read once at startup, passed to renderer via additionalArguments)
+let installerLangGlobal: string | null = null;
+function detectInstallerLanguage(): void {
+  try {
+    const langFile = path.join(process.resourcesPath, 'language.txt');
+    if (fs.existsSync(langFile)) {
+      const lang = fs.readFileSync(langFile, 'utf-8').trim();
+      if (lang === 'ar' || lang === 'en') installerLangGlobal = lang;
+    }
+  } catch { /* dev mode — no resources dir */ }
+}
+
 // ═══════════════════════════════════════════════════════════
 // PTY (Pseudo-Terminal) Management
 // ═══════════════════════════════════════════════════════════
@@ -247,6 +259,8 @@ function createWindow(): void {
       nodeIntegration: false,
       contextIsolation: true,
       webSecurity: true,  // Always enabled — Origin rewrite handles file:// → ws:// below
+      // Pass installer language to preload via process.argv (works in sandbox mode)
+      ...(installerLangGlobal ? { additionalArguments: [`--installer-lang=${installerLangGlobal}`] } : {}),
     },
     show: false,
   });
@@ -1102,6 +1116,7 @@ if (!gotTheLock) {
 
   app.whenReady().then(() => {
     loadConfig();
+    detectInstallerLanguage();
     createSplashWindow();
     createWindow();
     setupIPC();
