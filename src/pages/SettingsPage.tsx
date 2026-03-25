@@ -184,7 +184,7 @@ export function SettingsPageFull() {
                 : 'border-aegis-border/20 text-aegis-text-dim hover:border-aegis-border/40'
             )}
           >
-            العربية
+            {t('settings.langArabic')}
           </button>
           <button
             onClick={() => handleLanguageChange('en')}
@@ -195,7 +195,7 @@ export function SettingsPageFull() {
                 : 'border-aegis-border/20 text-aegis-text-dim hover:border-aegis-border/40'
             )}
           >
-            English
+            {t('settings.langEnglish')}
           </button>
           <button
             onClick={() => handleLanguageChange('zh')}
@@ -206,7 +206,7 @@ export function SettingsPageFull() {
                 : 'border-aegis-border/20 text-aegis-text-dim hover:border-aegis-border/40'
             )}
           >
-            简体中文
+            {t('settings.langChinese')}
           </button>
         </div>
       </GlassCard>
@@ -249,7 +249,7 @@ export function SettingsPageFull() {
       <GlassCard delay={0.09}>
         <h3 className="text-[14px] font-semibold text-aegis-text mb-4 flex items-center gap-2">
           <span className="text-aegis-primary">🎨</span>
-          {t('settings.accentColor', 'Accent Color')}
+          {t('settings.accentColor')}
         </h3>
         <div className="flex gap-3 flex-wrap">
           {(['teal', 'blue', 'purple', 'rose', 'amber', 'emerald'] as const).map((color) => (
@@ -316,7 +316,7 @@ export function SettingsPageFull() {
           </div>
 
           <button
-            onClick={() => notifications.notify({ type: 'info', title: 'AEGIS', body: t('settings.testNotification') })}
+            onClick={() => notifications.notify({ type: 'info', title: t('app.clientName'), body: t('settings.testNotification') })}
             className="text-[12px] px-4 py-2 rounded-xl border border-aegis-border/20 text-aegis-text-dim hover:text-aegis-text hover:border-aegis-border/40 transition-colors"
           >
             🔔 {t('settings.testSound')}
@@ -328,7 +328,7 @@ export function SettingsPageFull() {
       <GlassCard delay={0.15}>
         <h3 className="text-[14px] font-semibold text-aegis-text mb-4 flex items-center gap-2">
           {connected ? <Wifi size={16} className="text-aegis-success" /> : <WifiOff size={16} className="text-aegis-danger" />}
-          {t('settings.gateway', 'Gateway')}
+          {t('settings.gateway')}
         </h3>
         <div className="space-y-4">
           {/* Connection Status */}
@@ -347,13 +347,13 @@ export function SettingsPageFull() {
           {/* Gateway URL — editable */}
           <div>
             <label className="text-[12px] text-aegis-text-muted font-medium mb-1.5 block">
-              WebSocket URL
+              {t('settings.wsUrlLabel')}
             </label>
             <input
               type="text"
               value={editUrl}
               onChange={(e) => { setEditUrl(e.target.value); setConnectionDirty(true); }}
-              placeholder="ws://127.0.0.1:18789"
+              placeholder={t('settings.gatewayUrlPlaceholder')}
               className="w-full px-3 py-2.5 rounded-xl text-[13px] font-mono
                 bg-[rgb(var(--aegis-overlay)/0.03)] border border-aegis-border
                 text-aegis-text placeholder:text-aegis-text-dim
@@ -361,14 +361,14 @@ export function SettingsPageFull() {
               dir="ltr"
             />
             <div className="text-[10px] text-aegis-text-dim mt-1">
-              {t('settings.gatewayUrlHint', 'Leave empty to use default (ws://127.0.0.1:18789)')}
+              {t('settings.gatewayUrlHint')}
             </div>
           </div>
 
           {/* Gateway Token — editable */}
           <div>
             <label className="text-[12px] text-aegis-text-muted font-medium mb-1.5 block">
-              Gateway Token
+              {t('settings.gatewayToken')}
             </label>
             <input
               type="password"
@@ -418,7 +418,7 @@ export function SettingsPageFull() {
                 testResult === 'success' ? 'text-aegis-success' : 'text-aegis-danger'
               )}>
                 <CheckCircle size={12} />
-                {testResult === 'success' ? '✓' : '✗'}
+                {testResult === 'success' ? t('settings.connectionTestOk') : t('settings.connectionTestFail')}
               </span>
             )}
           </div>
@@ -448,7 +448,8 @@ export function SettingsPageFull() {
             <div className="flex items-center justify-between">
               <div className="text-[13px] text-aegis-text">{t('settingsExtra.contextWindow')}</div>
               <span className="text-[12px] font-mono text-aegis-text-dim">
-                {contextTokens >= 1000000 ? `${(contextTokens / 1000000).toFixed(0)}M` : `${Math.round(contextTokens / 1000)}k`} tokens
+                {contextTokens >= 1000000 ? `${(contextTokens / 1000000).toFixed(0)}M` : `${Math.round(contextTokens / 1000)}k`}{' '}
+                {t('settingsExtra.tokensUnit')}
               </span>
             </div>
           )}
@@ -466,17 +467,17 @@ export function SettingsPageFull() {
         </h3>
         <div className="space-y-2.5">
           {[
-            ['Ctrl+K', 'Command Palette'],
-            ['Ctrl+F', 'Search in Chat'],
-            ['Ctrl+Shift+F', 'Focus Mode'],
-            ['/', 'Slash Commands (in input)'],
+            ['Ctrl+K', t('settingsExtra.shortcutCommandPalette')],
+            ['Ctrl+F', t('settingsExtra.shortcutSearchChat')],
+            ['Ctrl+Shift+F', t('settingsExtra.shortcutFocusMode')],
+            ['/', t('settingsExtra.shortcutSlashCommands')],
             ['Ctrl+1-8', t('settingsExtra.navigatePages')],
             ['Ctrl+N', t('settingsExtra.newTab')],
             ['Ctrl+W', t('settingsExtra.closeTab')],
             ['Ctrl+Tab', t('settingsExtra.nextTab')],
             ['Ctrl+,', t('settingsExtra.openSettings')],
             ['Ctrl+R', t('settingsExtra.refresh')],
-            ['Escape', t('settingsExtra.closeModal') + ' / Exit Focus Mode'],
+            ['Escape', t('settingsExtra.shortcutEscapeExit')],
           ].map(([key, desc]) => (
             <div key={key} className="flex items-center justify-between">
               <span className="text-[12px] text-aegis-text-muted">{desc}</span>
@@ -493,15 +494,15 @@ export function SettingsPageFull() {
       <GlassCard delay={0.3}>
         <h3 className="text-[14px] font-semibold text-aegis-text mb-4 flex items-center gap-2">
           <span className="text-aegis-primary">🧪</span>
-          {t('settings.experimental', 'Experimental')}
-          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20">BETA</span>
+          {t('settings.experimental')}
+          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20">{t('settings.betaBadge')}</span>
         </h3>
 
         {/* 1M Context Toggle */}
         <div className="flex items-center justify-between py-3 border-b border-aegis-border/10">
           <div>
             <div className="text-[13px] text-aegis-text font-medium flex items-center gap-2">
-              1M Context Window
+              {t('settingsExtra.context1mTitle')}
               {context1mSaving && <Loader2 size={11} className="animate-spin text-aegis-text-dim" />}
             </div>
             <div className="text-[11px] text-aegis-text-dim/60 mt-0.5">
@@ -532,8 +533,8 @@ export function SettingsPageFull() {
         {/* Memory Explorer Toggle */}
         <div className="flex items-center justify-between py-3 border-b border-aegis-border/10">
           <div>
-            <div className="text-[13px] text-aegis-text font-medium">{t('settings.memoryExplorer', 'Memory Explorer')}</div>
-            <div className="text-[11px] text-aegis-text-dim/60 mt-0.5">{t('settings.memoryExplorerDesc', 'Browse and search memories via API server or local .md files')}</div>
+            <div className="text-[13px] text-aegis-text font-medium">{t('settings.memoryExplorer')}</div>
+            <div className="text-[11px] text-aegis-text-dim/60 mt-0.5">{t('settings.memoryExplorerDesc')}</div>
           </div>
           <Toggle
             enabled={memoryExplorerEnabled}
@@ -546,7 +547,7 @@ export function SettingsPageFull() {
           <div className="mt-3 space-y-3">
             {/* Mode Toggle */}
             <div>
-              <label className="text-[11px] text-aegis-text-dim block mb-1.5">{t('settings.memoryMode', 'Source')}</label>
+              <label className="text-[11px] text-aegis-text-dim block mb-1.5">{t('settings.memoryMode')}</label>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setMemoryMode('local')}
@@ -557,7 +558,7 @@ export function SettingsPageFull() {
                       : 'bg-transparent border-[rgb(var(--aegis-overlay)/0.08)] text-aegis-text-dim hover:border-[rgb(var(--aegis-overlay)/0.15)] hover:text-aegis-text-muted'
                   )}
                 >
-                  📁 {t('settings.memoryLocal', 'Local Files')}
+                  📁 {t('settings.memoryLocal')}
                 </button>
                 <button
                   onClick={() => setMemoryMode('api')}
@@ -568,7 +569,7 @@ export function SettingsPageFull() {
                       : 'bg-transparent border-[rgb(var(--aegis-overlay)/0.08)] text-aegis-text-dim hover:border-[rgb(var(--aegis-overlay)/0.15)] hover:text-aegis-text-muted'
                   )}
                 >
-                  🔌 {t('settings.memoryApi', 'API Server')}
+                  🔌 {t('settings.memoryApi')}
                 </button>
               </div>
             </div>
@@ -576,13 +577,13 @@ export function SettingsPageFull() {
             {/* Local Files Path */}
             {memoryMode === 'local' && (
               <div>
-                <label className="text-[11px] text-aegis-text-dim block mb-1.5">{t('settings.memoryPath', 'Memory Folder')}</label>
+                <label className="text-[11px] text-aegis-text-dim block mb-1.5">{t('settings.memoryPath')}</label>
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
                     value={memoryLocalPath}
                     readOnly
-                    placeholder={t('settings.memoryPathPlaceholder', 'Select folder...')}
+                    placeholder={t('settings.memoryPathPlaceholder')}
                     className="flex-1 bg-[rgb(var(--aegis-overlay)/0.05)] border border-[rgb(var(--aegis-overlay)/0.1)] rounded-lg px-3 py-2 text-[12px] font-mono text-aegis-text placeholder:text-aegis-text-dim/30 focus:outline-none"
                     style={{ colorScheme: 'dark' }}
                   />
@@ -593,22 +594,22 @@ export function SettingsPageFull() {
                     }}
                     className="px-3 py-2 rounded-lg bg-aegis-primary/15 border border-aegis-primary/30 text-aegis-primary text-[12px] font-medium hover:bg-aegis-primary/25 transition-colors whitespace-nowrap"
                   >
-                    {t('settings.browse', 'Browse')}
+                    {t('settings.browse')}
                   </button>
                 </div>
-                <p className="text-[10px] text-aegis-text-dim/40 mt-1">{t('settings.memoryPathHint', 'Select your OpenClaw workspace folder (contains MEMORY.md)')}</p>
+                <p className="text-[10px] text-aegis-text-dim/40 mt-1">{t('settings.memoryPathHint')}</p>
               </div>
             )}
 
             {/* API URL */}
             {memoryMode === 'api' && (
               <div>
-                <label className="text-[11px] text-aegis-text-dim block mb-1.5">{t('settings.memoryApiUrl', 'Memory API URL')}</label>
+                <label className="text-[11px] text-aegis-text-dim block mb-1.5">{t('settings.memoryApiUrl')}</label>
                 <input
                   type="text"
                   defaultValue={memoryApiUrl}
                   onBlur={(e) => setMemoryApiUrl(e.target.value)}
-                  placeholder="http://localhost:3040"
+                  placeholder={t('settingsExtra.memoryApiPlaceholder')}
                   className="w-full bg-[rgb(var(--aegis-overlay)/0.05)] border border-[rgb(var(--aegis-overlay)/0.1)] rounded-lg px-3 py-2 text-[12px] font-mono text-aegis-text placeholder:text-aegis-text-dim/30 focus:outline-none focus:border-[rgb(var(--aegis-primary)/0.4)] focus:bg-[rgb(var(--aegis-overlay)/0.07)]"
                   style={{ colorScheme: 'dark' }}
                 />
@@ -621,17 +622,17 @@ export function SettingsPageFull() {
       {/* About + System Info */}
       <GlassCard delay={0.3}>
         <div className="text-center py-4 mb-4">
-          <div className="text-3xl mb-2">Æ</div>
-          <div className="text-[14px] font-bold text-aegis-text">OpenClaw Station</div>
+          <div className="text-3xl mb-2">O</div>
+          <div className="text-[14px] font-bold text-aegis-text">{t('app.clientName')}</div>
           <div className="text-[12px] text-aegis-text-dim mt-1">v{APP_VERSION}</div>
-          <div className="text-[11px] text-aegis-text-dim mt-0.5">Advanced Executive General Intelligence System</div>
+          <div className="text-[11px] text-aegis-text-dim mt-0.5">{t('app.fullName')}</div>
         </div>
         <div className="space-y-2 border-t border-aegis-border/15 pt-3">
           {[
-            ['Platform', typeof navigator !== 'undefined' ? navigator.platform : '—'],
-            ['User Agent', typeof navigator !== 'undefined' ? (navigator.userAgent.match(/Electron\/[\d.]+/)?.[0] || '—') : '—'],
-            ['Gateway', connected ? `${localStorage.getItem('aegis-gateway-http')?.replace('http', 'ws') || 'ws://127.0.0.1:18789'} ✓` : '— ✗'],
-            ['Model', mainModel.split('/').pop() || '—'],
+            [t('settingsExtra.aboutPlatform'), typeof navigator !== 'undefined' ? navigator.platform : '—'],
+            [t('settingsExtra.aboutUserAgent'), typeof navigator !== 'undefined' ? (navigator.userAgent.match(/Electron\/[\d.]+/)?.[0] || '—') : '—'],
+            [t('settingsExtra.aboutGateway'), connected ? `${localStorage.getItem('aegis-gateway-http')?.replace('http', 'ws') || 'ws://127.0.0.1:18789'} ✓` : '— ✗'],
+            [t('settingsExtra.aboutModel'), mainModel.split('/').pop() || '—'],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between">
               <span className="text-[11px] text-aegis-text-dim">{label}</span>
@@ -640,7 +641,7 @@ export function SettingsPageFull() {
           ))}
         </div>
         <button onClick={() => {
-          const info = `OpenClaw Station v${APP_VERSION}\nPlatform: ${navigator.platform}\nModel: ${mainModel}\nGateway: ${connected ? 'connected' : 'disconnected'}`;
+          const info = `${t('app.clientName')} v${APP_VERSION}\n${t('settingsExtra.aboutPlatform')}: ${navigator.platform}\n${t('settingsExtra.aboutModel')}: ${mainModel}\n${t('settingsExtra.aboutGateway')}: ${connected ? t('connection.connected') : t('connection.disconnected')}`;
           navigator.clipboard?.writeText(info);
         }}
           className="mt-3 flex items-center gap-1.5 mx-auto px-3 py-1.5 rounded-lg text-[11px] text-aegis-text-dim hover:text-aegis-text border border-aegis-border/20 hover:border-aegis-border/40 transition-colors">

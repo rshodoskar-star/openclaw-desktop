@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { Plus, Shield, MessageSquare, ChevronDown, Zap, RotateCcw, Bot } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { useChatStore, Session } from '@/stores/chatStore';
 import { useGatewayDataStore } from '@/stores/gatewayDataStore';
 import { gateway } from '@/services/gateway/index';
@@ -10,7 +11,7 @@ import clsx from 'clsx';
 
 // ═══════════════════════════════════════════════════════════
 // ChatHeader — Compact header replacing old tab bar
-// Layout: Æ AEGIS ∨       +  ●  165k / 200k
+// Layout: O OpenClaw Station ∨       +  ●  165k / 200k
 // ═══════════════════════════════════════════════════════════
 
 const MAIN_SESSION = 'agent:main:main';
@@ -34,8 +35,8 @@ function formatDuration(ms: number): string {
 }
 
 /** Readable label for a session tab */
-function sessionLabel(session: Session | undefined, key: string): string {
-  if (key === MAIN_SESSION) return 'AEGIS';
+function sessionLabel(session: Session | undefined, key: string, t: TFunction): string {
+  if (key === MAIN_SESSION) return t('app.clientName');
   if (session?.label) {
     const label = session.label;
     return label.length > 30 ? label.slice(0, 28) + '…' : label;
@@ -66,7 +67,7 @@ function isCronOrVoice(key: string): boolean {
 }
 
 // ═══════════════════════════════════════════════════════════
-// Agent Status Tooltip — hover card on AEGIS identity
+// Agent Status Tooltip — hover card on OpenClaw Station identity
 // ═══════════════════════════════════════════════════════════
 
 function AgentStatusTooltip({ visible, tokenUsage, connected }: {
@@ -75,6 +76,7 @@ function AgentStatusTooltip({ visible, tokenUsage, connected }: {
   connected: boolean;
 }) {
   const { t } = useTranslation();
+  const statusBadge = connected ? t('chat.tooltipActive') : t('chat.tooltipOffline');
 
   // Get session info from gateway data store (has model field)
   const gatewaySessions = useGatewayDataStore((s) => s.sessions);
@@ -112,10 +114,10 @@ function AgentStatusTooltip({ visible, tokenUsage, connected }: {
           {/* Header */}
           <div className="flex items-center gap-3 p-4 border-b border-[rgb(var(--aegis-overlay)/0.06)]">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-aegis-primary/20 to-aegis-primary/5 border border-aegis-primary/25 flex items-center justify-center text-lg">
-              Æ
+              O
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-bold text-aegis-primary">AEGIS</div>
+              <div className="text-sm font-bold text-aegis-primary">{t('app.clientName')}</div>
               <div className="text-[9px] text-aegis-text-dim font-mono">{modelShort}</div>
             </div>
             <div className={clsx(
@@ -124,7 +126,7 @@ function AgentStatusTooltip({ visible, tokenUsage, connected }: {
                 ? 'bg-aegis-primary/10 text-aegis-primary border-aegis-primary/20'
                 : 'bg-[rgb(var(--aegis-overlay)/0.04)] text-aegis-text-muted border-[rgb(var(--aegis-overlay)/0.08)]'
             )}>
-              {connected ? 'Active' : 'Offline'}
+              {statusBadge}
             </div>
           </div>
 
@@ -132,11 +134,11 @@ function AgentStatusTooltip({ visible, tokenUsage, connected }: {
           <div className="grid grid-cols-2 gap-2 p-3">
             <div className="bg-[rgb(var(--aegis-overlay)/0.02)] border border-[rgb(var(--aegis-overlay)/0.04)] rounded-xl p-2.5 text-center">
               <div className="text-base font-extrabold" style={{ color: 'rgb(var(--aegis-accent))' }}>{compactions}</div>
-              <div className="text-[8px] text-aegis-text-dim uppercase tracking-wider mt-0.5">{t('chat.compactions', 'Compactions')}</div>
+              <div className="text-[8px] text-aegis-text-dim uppercase tracking-wider mt-0.5">{t('chat.compactions')}</div>
             </div>
             <div className="bg-[rgb(var(--aegis-overlay)/0.02)] border border-[rgb(var(--aegis-overlay)/0.04)] rounded-xl p-2.5 text-center">
               <div className="text-base font-extrabold" style={{ color: dataColor(3) }}>{sessionAge}</div>
-              <div className="text-[8px] text-aegis-text-dim uppercase tracking-wider mt-0.5">{t('chat.sessionAge', 'Session Age')}</div>
+              <div className="text-[8px] text-aegis-text-dim uppercase tracking-wider mt-0.5">{t('chat.sessionAge')}</div>
             </div>
           </div>
 
@@ -144,7 +146,7 @@ function AgentStatusTooltip({ visible, tokenUsage, connected }: {
           <div className="px-4 pb-2">
             <div className="flex justify-between items-center mb-1.5">
               <span className="text-[10px] text-aegis-text-muted flex items-center gap-1">
-                <Zap size={10} /> {t('chat.contextUsage', 'Context Usage')}
+                <Zap size={10} /> {t('chat.contextUsage')}
               </span>
               <span className="text-[10px] font-semibold font-mono" style={{ color: usageColor }}>
                 {formatTokens(contextTokens)} / {formatTokens(maxTokens)}
@@ -165,20 +167,20 @@ function AgentStatusTooltip({ visible, tokenUsage, connected }: {
           <div className="px-4 pb-3 space-y-0">
             <div className="flex items-center gap-2 py-1.5 border-t border-[rgb(var(--aegis-overlay)/0.03)]">
               <span className="text-xs">🗜️</span>
-              <span className="text-[10px] text-aegis-text-muted flex-1">{t('chat.compactsAt', 'Compaction at')}</span>
+              <span className="text-[10px] text-aegis-text-muted flex-1">{t('chat.compactsAt')}</span>
               <span className={clsx('text-[10px] font-bold font-mono', compactPct > 80 ? 'text-aegis-danger' : compactPct > 50 ? 'text-aegis-warning' : 'text-aegis-primary')}>
                 ~{formatTokens(compactAt)}
               </span>
             </div>
             <div className="flex items-center gap-2 py-1.5 border-t border-[rgb(var(--aegis-overlay)/0.03)]">
               <span className="text-xs">💓</span>
-              <span className="text-[10px] text-aegis-text-muted flex-1">{t('chat.heartbeat', 'Heartbeat')}</span>
-              <span className="text-[10px] font-bold font-mono text-aegis-primary">15m interval</span>
+              <span className="text-[10px] text-aegis-text-muted flex-1">{t('chat.heartbeat')}</span>
+              <span className="text-[10px] font-bold font-mono text-aegis-primary">{t('chat.heartbeatInterval')}</span>
             </div>
             <div className="flex items-center gap-2 py-1.5 border-t border-[rgb(var(--aegis-overlay)/0.03)]">
               <span className="text-xs">🧠</span>
-              <span className="text-[10px] text-aegis-text-muted flex-1">{t('chat.thinking', 'Thinking')}</span>
-              <span className="text-[10px] font-bold font-mono" style={{ color: dataColor(3) }}>HIGH</span>
+              <span className="text-[10px] text-aegis-text-muted flex-1">{t('chat.thinking')}</span>
+              <span className="text-[10px] font-bold font-mono" style={{ color: dataColor(3) }}>{t('chat.thinkingLevelHigh')}</span>
             </div>
           </div>
         </motion.div>
@@ -267,7 +269,7 @@ function SessionDropdown({ open, onClose, onSelect, openTabs, sessions, activeKe
           {openTabs.length > 0 && (
             <div className="p-2">
               <div className="text-[9px] text-aegis-text-dim uppercase tracking-wider px-2 py-1 mb-0.5">
-                {t('chat.openSessions', 'Open Sessions')}
+                {t('chat.openSessions')}
               </div>
               {openTabs.filter(isMainSession).map((key) => {
                 const session = getSession(key);
@@ -294,7 +296,7 @@ function SessionDropdown({ open, onClose, onSelect, openTabs, sessions, activeKe
                         'text-[12px] font-medium truncate',
                         isActive ? 'text-aegis-primary' : 'text-aegis-text',
                       )}>
-                        {sessionLabel(session, key)}
+                        {sessionLabel(session, key, t)}
                       </div>
                       {session?.kind && !isMain && (
                         <div className="text-[9px] text-aegis-text-dim font-mono mt-0.5">{session.kind}</div>
@@ -320,7 +322,7 @@ function SessionDropdown({ open, onClose, onSelect, openTabs, sessions, activeKe
                     || agentId.charAt(0).toUpperCase() + agentId.slice(1);
                   return (
                     <div key={agentId} className="mb-0.5">
-                      {/* Agent group header — like Control UI: "AEGIS (main)" */}
+                      {/* Agent group header — like Control UI: "OpenClaw Station (main)" */}
                       <div className="px-3 py-1.5 text-[11px] font-bold text-aegis-text">
                         {agentDisplayName} <span className="text-aegis-text-dim font-normal">({agentId})</span>
                       </div>
@@ -357,14 +359,14 @@ function SessionDropdown({ open, onClose, onSelect, openTabs, sessions, activeKe
           {/* Loading state */}
           {loading && (
             <div className="text-center py-3 text-[11px] text-aegis-text-dim">
-              {t('common.loading', 'Loading...')}
+              {t('common.loading')}
             </div>
           )}
 
           {/* Empty state (no other sessions) */}
           {!loading && availableSessions.length === 0 && openTabs.length <= 1 && (
             <div className="text-center py-4 text-[11px] text-aegis-text-dim px-4">
-              {t('chat.noOtherSessions', 'No other sessions')}
+              {t('chat.noOtherSessions')}
             </div>
           )}
         </motion.div>
@@ -460,7 +462,7 @@ export function ChatTabs() {
 
   // ── Active session info ──
   const activeSession = sessions.find((s) => s.key === activeSessionKey);
-  const activeLabel = sessionLabel(activeSession, activeSessionKey);
+  const activeLabel = sessionLabel(activeSession, activeSessionKey, t);
   const isMain = activeSessionKey === MAIN_SESSION;
 
   // ── Status dot color ──
@@ -471,10 +473,10 @@ export function ChatTabs() {
       : 'bg-aegis-danger';
 
   const statusLabel = connected
-    ? t('connection.connected', 'Connected')
+    ? t('connection.connected')
     : connecting
-      ? t('connection.connecting', 'Connecting...')
-      : t('connection.disconnected', 'Disconnected');
+      ? t('connection.connecting')
+      : t('connection.disconnected');
 
   return (
     <div
@@ -483,7 +485,7 @@ export function ChatTabs() {
     >
       {/* ── Left: Identity + Status + Tokens + Session Switcher ── */}
       <div className="relative flex items-center gap-2.5 min-w-0">
-        {/* AEGIS identity block — hover for tooltip */}
+        {/* OpenClaw Station identity block — hover for tooltip */}
         <div
           ref={identityRef}
           className="flex items-center gap-2.5 cursor-default select-none"
@@ -492,7 +494,7 @@ export function ChatTabs() {
         >
           {/* Icon */}
           {isMain ? (
-            <span className="text-[15px] leading-none">Æ</span>
+            <span className="text-[15px] leading-none">O</span>
           ) : (
             <MessageSquare size={14} className="text-aegis-text-muted" />
           )}
@@ -514,7 +516,7 @@ export function ChatTabs() {
             'text-aegis-text-dim hover:text-aegis-text-muted hover:bg-[rgb(var(--aegis-overlay)/0.05)]',
             showSessions && 'bg-[rgb(var(--aegis-overlay)/0.06)] text-aegis-text-muted',
           )}
-          aria-label={t('chat.switchSession', 'Switch session')}
+          aria-label={t('chat.switchSession')}
         >
           <ChevronDown size={12} className={clsx('transition-transform', showSessions && 'rotate-180')} />
         </button>
@@ -551,7 +553,7 @@ export function ChatTabs() {
             'text-aegis-text-dim hover:text-aegis-text-muted hover:bg-[rgb(var(--aegis-overlay)/0.05)]',
             isRefreshing && 'opacity-50 cursor-wait',
           )}
-          title={t('chat.refresh', 'Refresh chat')}
+          title={t('chat.refreshChat')}
         >
           <RotateCcw size={13} className={clsx('transition-transform', isRefreshing && 'animate-spin')} />
         </button>
@@ -564,7 +566,7 @@ export function ChatTabs() {
               'text-aegis-text-dim hover:text-aegis-text-muted hover:bg-[rgb(var(--aegis-overlay)/0.05)]',
               showNewPicker && 'bg-[rgb(var(--aegis-overlay)/0.06)] text-aegis-text-muted',
             )}
-            title={t('chat.newTab', 'Open session')}
+            title={t('chat.openSessionPicker')}
           >
             <Plus size={14} />
           </button>
@@ -582,15 +584,15 @@ export function ChatTabs() {
               >
                 <div className="p-2">
                   <div className="text-[9px] text-aegis-text-dim uppercase tracking-wider px-2 py-1 mb-1">
-                    {t('chat.cronAndVoice', 'Cron & Voice Sessions')}
+                    {t('chat.cronAndVoice')}
                   </div>
                   {loadingNew ? (
                     <div className="text-center py-4 text-[11px] text-aegis-text-dim">
-                      {t('common.loading', 'Loading...')}
+                      {t('common.loading')}
                     </div>
                   ) : newSessions.length === 0 ? (
                     <div className="text-center py-4 text-[11px] text-aegis-text-dim">
-                      {t('chat.noCronSessions', 'No cron or voice sessions')}
+                      {t('chat.noCronSessions')}
                     </div>
                   ) : (
                     newSessions.map((session) => (

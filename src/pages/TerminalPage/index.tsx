@@ -50,7 +50,7 @@ async function loadXterm() {
 }
 
 // ═══════════════════════════════════════════════════════════
-// AEGIS Terminal Theme (matches dark/light palette)
+// OpenClaw Station Terminal Theme (matches dark/light palette)
 // ═══════════════════════════════════════════════════════════
 
 function getTerminalTheme(): Record<string, string> {

@@ -158,7 +158,7 @@ export function VoiceRecorder({ onSendVoice, onCancel, disabled }: VoiceRecorder
         const ext = mimeType.includes('ogg') ? 'ogg' : 'webm';
         const filename = `voice-${Date.now()}.${ext}`;
 
-        // Save to shared folder for AEGIS to read from workspace
+        // Save to shared folder for OpenClaw Station to read from workspace
         let savedPath = '';
         if (window.aegis?.voice?.save) {
           savedPath = await window.aegis.voice.save(filename, base64) || '';

@@ -84,7 +84,7 @@ export function VoiceSettings({ onClose }: VoiceSettingsProps) {
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash-preview-tts',
-        contents: [{ role: 'user', parts: [{ text: 'مرحباً، أنا AEGIS' }] }],
+        contents: [{ role: 'user', parts: [{ text: 'مرحباً، أنا OpenClaw Station' }] }],
         config: {
           responseModalities: ['AUDIO'],
           speechConfig: {

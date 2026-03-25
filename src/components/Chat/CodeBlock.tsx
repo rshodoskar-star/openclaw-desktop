@@ -59,7 +59,7 @@ SyntaxHighlighter.registerLanguage('jsx', jsx);
 SyntaxHighlighter.registerLanguage('tsx', tsx);
 
 // ═══════════════════════════════════════════════════════════
-// Code Block — Theme-aware (dark/light) matching AEGIS design
+// Code Block — Theme-aware (dark/light) matching OpenClaw design
 // Uses CSS variables: --aegis-code-bg, --aegis-code-header
 // ═══════════════════════════════════════════════════════════
 
@@ -68,7 +68,7 @@ interface CodeBlockProps {
   code: string;
 }
 
-/** Build syntax theme from base (oneDark/oneLight) with AEGIS overrides */
+/** Build syntax theme from base (oneDark/oneLight) with OpenClaw overrides */
 function buildTheme(base: Record<string, any>) {
   return {
     ...base,

@@ -1,6 +1,7 @@
 {
   "app": {
     "name": "OpenMCP",
+    "clientName": "OpenClaw Station",
     "fullName": "OpenMCP Station",
     "version": "v4"
   },
@@ -282,7 +283,17 @@
     "memoryPath": "记忆文件夹",
     "memoryPathPlaceholder": "选择文件夹…",
     "memoryPathHint": "选择 OpenClaw 工作区（含 MEMORY.md）",
-    "browse": "浏览"
+    "browse": "浏览",
+    "accentColor": "强调色",
+    "gatewayUrlHint": "留空则使用默认地址（ws://127.0.0.1:18789）",
+    "wsUrlLabel": "WebSocket 地址",
+    "gatewayUrlPlaceholder": "ws://127.0.0.1:18789",
+    "langArabic": "العربية",
+    "langEnglish": "English",
+    "langChinese": "简体中文",
+    "betaBadge": "测试版",
+    "connectionTestOk": "成功",
+    "connectionTestFail": "失败"
   },
   "common": {
     "cancel": "取消",
@@ -309,7 +320,21 @@
     "noOtherSessions": "无其他会话",
     "cronAndVoice": "定时与语音会话",
     "noCronSessions": "无定时或语音会话",
-    "stopped": "已停止"
+    "stopped": "已停止",
+    "compactions": "压缩次数",
+    "sessionAge": "会话时长",
+    "contextUsage": "上下文占用",
+    "compactsAt": "压缩阈值",
+    "heartbeat": "心跳",
+    "heartbeatInterval": "每 15 分钟",
+    "thinking": "思考",
+    "thinkingLevelHigh": "高",
+    "openSessions": "已打开会话",
+    "switchSession": "切换会话",
+    "refreshChat": "刷新对话",
+    "openSessionPicker": "打开会话",
+    "tooltipActive": "活跃",
+    "tooltipOffline": "离线"
   },
   "titlebar": {
     "minimize": "最小化",
@@ -591,7 +616,19 @@
     "context1mDesc": "为 Opus / Sonnet 启用 Anthropic 100 万上下文测试版 — 上下文增至 1,000,000 token",
     "toolIntentLabel": "工具意图视图",
     "toolIntentDesc": "在对话中以卡片显示工具调用及输入/输出 — 默认隐藏",
-    "copySystemInfo": "复制系统信息"
+    "copySystemInfo": "复制系统信息",
+    "shortcutCommandPalette": "命令面板",
+    "shortcutSearchChat": "对话内搜索",
+    "shortcutFocusMode": "专注模式",
+    "shortcutSlashCommands": "斜杠命令（输入框内）",
+    "shortcutEscapeExit": "关闭弹窗 / 退出专注模式",
+    "context1mTitle": "100 万上下文窗口",
+    "tokensUnit": "tokens",
+    "aboutPlatform": "平台",
+    "aboutUserAgent": "用户代理",
+    "aboutGateway": "网关",
+    "aboutModel": "模型",
+    "memoryApiPlaceholder": "http://localhost:3040"
   },
   "commandPaletteFooter": {
     "noResults": "无结果",
@@ -922,7 +959,33 @@
     "saveFailed": "保存失败",
     "configSaved": "配置已成功保存",
     "pressCtrlS": "Ctrl+S 保存",
-    "secrets": "密钥"
+    "secrets": "密钥",
+    "secretsTab": {
+      "auditTitle": "密钥审计",
+      "auditSubtitle": "扫描配置中的明文密钥与未解析引用",
+      "runAudit": "运行审计",
+      "runningAudit": "正在审计…",
+      "auditFailed": "审计失败",
+      "reloadSuccess": "密钥已重新加载",
+      "reloadFailed": "重新加载失败",
+      "statusClean": "🟢 干净 — 未发现问题",
+      "statusFindings": "🟡 发现问题 — 检测到明文密钥",
+      "statusUnresolved": "🔴 未解析 — 无法解析密钥引用",
+      "statusUnknown": "⚪ 未知",
+      "providersTitle": "密钥提供方",
+      "providersSubtitle": "已配置的密钥解析来源（只读 — 请在「高级」→「原始 JSON」中编辑）",
+      "noProviders": "未配置密钥提供方",
+      "noProvidersHintBefore": "在「高级」标签页中的",
+      "noProvidersHintAfter": "下添加提供方",
+      "providerTypeEnv": "环境变量",
+      "providerTypeFile": "文件",
+      "providerTypeExec": "命令",
+      "reloadTitle": "重新加载密钥",
+      "reloadSubtitle": "重新解析所有密钥引用并切换运行时快照",
+      "reloadDescription": "在提供方中更新密钥值（环境变量、文件等）后使用，无需重启网关即可生效。",
+      "reloading": "正在重新加载…",
+      "reloadButton": "重新加载密钥"
+    }
   },
   "calendar": {
     "title": "日历",

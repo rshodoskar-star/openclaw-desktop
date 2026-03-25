@@ -1,6 +1,7 @@
 {
   "app": {
     "name": "AEGIS",
+    "clientName": "OpenClaw Station",
     "fullName": "Advanced Executive General Intelligence System",
     "version": "v4"
   },
@@ -282,7 +283,17 @@
     "memoryPath": "Memory Folder",
     "memoryPathPlaceholder": "Select folder...",
     "memoryPathHint": "Select your OpenClaw workspace folder (contains MEMORY.md)",
-    "browse": "Browse"
+    "browse": "Browse",
+    "accentColor": "Accent Color",
+    "gatewayUrlHint": "Leave empty to use default (ws://127.0.0.1:18789)",
+    "wsUrlLabel": "WebSocket URL",
+    "gatewayUrlPlaceholder": "ws://127.0.0.1:18789",
+    "langArabic": "العربية",
+    "langEnglish": "English",
+    "langChinese": "简体中文",
+    "betaBadge": "BETA",
+    "connectionTestOk": "OK",
+    "connectionTestFail": "Failed"
   },
   "common": {
     "cancel": "Cancel",
@@ -309,7 +320,21 @@
     "noOtherSessions": "No other sessions",
     "cronAndVoice": "Cron & Voice Sessions",
     "noCronSessions": "No cron or voice sessions",
-    "stopped": "Stopped"
+    "stopped": "Stopped",
+    "compactions": "Compactions",
+    "sessionAge": "Session Age",
+    "contextUsage": "Context Usage",
+    "compactsAt": "Compaction at",
+    "heartbeat": "Heartbeat",
+    "heartbeatInterval": "15m interval",
+    "thinking": "Thinking",
+    "thinkingLevelHigh": "HIGH",
+    "openSessions": "Open Sessions",
+    "switchSession": "Switch session",
+    "refreshChat": "Refresh chat",
+    "openSessionPicker": "Open session",
+    "tooltipActive": "Active",
+    "tooltipOffline": "Offline"
   },
   "titlebar": {
     "minimize": "Minimize",
@@ -591,7 +616,19 @@
     "context1mDesc": "Enable Anthropic 1M context beta for Opus / Sonnet — increases context to 1,000,000 tokens",
     "toolIntentLabel": "Tool Intent View",
     "toolIntentDesc": "Show tool calls in chat as cards with input/output — hidden by default",
-    "copySystemInfo": "Copy System Info"
+    "copySystemInfo": "Copy System Info",
+    "shortcutCommandPalette": "Command Palette",
+    "shortcutSearchChat": "Search in Chat",
+    "shortcutFocusMode": "Focus Mode",
+    "shortcutSlashCommands": "Slash Commands (in input)",
+    "shortcutEscapeExit": "Close modal / Exit Focus Mode",
+    "context1mTitle": "1M Context Window",
+    "tokensUnit": "tokens",
+    "aboutPlatform": "Platform",
+    "aboutUserAgent": "User Agent",
+    "aboutGateway": "Gateway",
+    "aboutModel": "Model",
+    "memoryApiPlaceholder": "http://localhost:3040"
   },
   "commandPaletteFooter": {
     "noResults": "No results",
@@ -922,7 +959,33 @@
     "saveFailed": "Save failed",
     "configSaved": "Configuration saved successfully",
     "pressCtrlS": "Ctrl+S to save",
-    "secrets": "Secrets"
+    "secrets": "Secrets",
+    "secretsTab": {
+      "auditTitle": "Secrets Audit",
+      "auditSubtitle": "Scan config for plaintext secrets and unresolved refs",
+      "runAudit": "Run Audit",
+      "runningAudit": "Running audit...",
+      "auditFailed": "Audit failed",
+      "reloadSuccess": "Secrets reloaded successfully",
+      "reloadFailed": "Reload failed",
+      "statusClean": "🟢 Clean — no issues found",
+      "statusFindings": "🟡 Findings — plaintext secrets detected",
+      "statusUnresolved": "🔴 Unresolved — secret refs could not be resolved",
+      "statusUnknown": "⚪ Unknown",
+      "providersTitle": "Secret Providers",
+      "providersSubtitle": "Configured sources for secret resolution (read-only — edit via Advanced → Raw JSON)",
+      "noProviders": "No secret providers configured",
+      "noProvidersHintBefore": "Add providers under",
+      "noProvidersHintAfter": "in the Advanced tab",
+      "providerTypeEnv": "env",
+      "providerTypeFile": "file",
+      "providerTypeExec": "exec",
+      "reloadTitle": "Reload Secrets",
+      "reloadSubtitle": "Re-resolves all secret refs and swaps the runtime snapshot",
+      "reloadDescription": "Use this after updating secret values in your providers (environment variables, files, etc.) to apply them without restarting the gateway.",
+      "reloading": "Reloading...",
+      "reloadButton": "Reload Secrets"
+    }
   },
   "calendar": {
     "title": "Calendar",
