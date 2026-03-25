@@ -2,7 +2,12 @@
 
 interface AegisAPI {
   /** Installer-selected language (set by NSIS setup wizard) */
-  installerLanguage?: 'ar' | 'en';
+  installerLanguage?: 'ar' | 'en' | 'zh';
+
+  /** Notify main process of UI language (tray / native strings) */
+  i18n?: {
+    setLanguage: (lang: string) => void;
+  };
   window: {
     minimize: () => Promise<void>;
     maximize: () => Promise<boolean>;

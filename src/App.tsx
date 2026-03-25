@@ -60,6 +60,12 @@ export default function App() {
   const [gatewayHttpUrl, setGatewayHttpUrl] = useState('http://127.0.0.1:18789');
   const pairingTriggeredRef = useRef(false);
 
+  // Sync UI language to Electron main process (tray / native strings) on mount
+  useEffect(() => {
+    const lang = useSettingsStore.getState().language;
+    window.aegis?.i18n?.setLanguage?.(lang);
+  }, []);
+
   // ── Load Sessions from Gateway ──
   const loadSessions = useCallback(async () => {
     try {
@@ -255,9 +261,11 @@ export default function App() {
           setGatewayHttpUrl(httpUrl);
           localStorage.setItem('aegis-gateway-http', httpUrl);
           if (!localStorage.getItem('aegis-language') && config.installerLanguage) {
-            const lang = config.installerLanguage as 'ar' | 'en';
-            changeLanguage(lang);
-            useSettingsStore.getState().setLanguage(lang);
+            const lang = config.installerLanguage;
+            if (lang === 'ar' || lang === 'en' || lang === 'zh') {
+              changeLanguage(lang);
+              useSettingsStore.getState().setLanguage(lang);
+            }
           }
           gateway.connect(wsUrl, token);
         } else {

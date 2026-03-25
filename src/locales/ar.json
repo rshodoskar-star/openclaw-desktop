@@ -28,7 +28,54 @@
     "terminal": "الطرفية",
     "notifications": "الإشعارات",
     "calendar": "التقويم",
-    "voiceLive": "محادثة صوتية"
+    "voiceLive": "محادثة صوتية",
+    "plugins": "الإضافات"
+  },
+  "pluginsPage": {
+    "title": "🧩 الإضافات",
+    "subtitle": "صفحات وأدوات إضافية في AEGIS Desktop",
+    "open": "فتح",
+    "backAria": "العودة إلى الإضافات",
+    "loading": "جاري التحميل…",
+    "notFound": "لم يتم العثور على مكوّن الإضافة",
+    "items": {
+      "pixel-agents": {
+        "name": "وكلاء البكسل",
+        "description": "مكتبك الافتراضي بفن البكسل"
+      },
+      "sessions": {
+        "name": "مدير الجلسات",
+        "description": "إدارة الجلسات النشطة"
+      },
+      "logs": {
+        "name": "عارض السجلات",
+        "description": "عرض سجلات النظام"
+      },
+      "multi-agent": {
+        "name": "متعدد الوكلاء",
+        "description": "عرض متعدد الوكلاء مباشر"
+      },
+      "files": {
+        "name": "مدير الملفات",
+        "description": "تصفح وإدارة الملفات"
+      },
+      "sandbox": {
+        "name": "مفسّر الكود",
+        "description": "بيئة تنفيذ الكود المعزولة"
+      },
+      "tools": {
+        "name": "أدوات MCP",
+        "description": "أدوات MCP المتاحة"
+      },
+      "skills": {
+        "name": "المهارات",
+        "description": "المهارات والأدوات المتاحة"
+      },
+      "memory": {
+        "name": "مستكشف الذاكرة",
+        "description": "استكشاف سجلات الذاكرة"
+      }
+    }
   },
   "skills": {
     "title": "المهارات",
@@ -274,7 +321,7 @@
     "reconnect": "إعادة الاتصال",
     "connectGateway": "اتصل بالـ Gateway",
     "toggleTheme": "تغيير المظهر",
-    "toggleLanguage": "Switch to English",
+    "toggleLanguage": "تبديل اللغة (إنجليزي ← عربي ← صيني)",
     "toggleNotifications": "تبديل التنبيهات",
     "searchPlaceholder": "ابحث في الأوامر...",
     "searchBarHint": "بحث..."

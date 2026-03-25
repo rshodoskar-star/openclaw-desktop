@@ -15,7 +15,7 @@ import {
 import { autoUpdater } from 'electron-updater';
 import * as path from 'path';
 import * as fs from 'fs';
-import { createTray } from './tray';
+import { createTray, refreshTrayMenu } from './tray';
 import { initI18n, setLanguage, t } from './i18n';
 import * as crypto from 'crypto';
 import { execFileSync, spawnSync, execSync } from 'child_process';
@@ -172,7 +172,7 @@ function detectInstallerLanguage(): void {
     const langFile = path.join(process.resourcesPath, 'language.txt');
     if (fs.existsSync(langFile)) {
       const lang = fs.readFileSync(langFile, 'utf-8').trim();
-      if (lang === 'ar' || lang === 'en') installerLangGlobal = lang;
+      if (lang === 'ar' || lang === 'en' || lang === 'zh') installerLangGlobal = lang;
     }
   } catch { /* dev mode — no resources dir */ }
 }
@@ -600,6 +600,7 @@ function setupIPC(): void {
   // ── i18n: renderer notifies main of language changes ──
   ipcMain.on('i18n:setLanguage', (_e, lang: string) => {
     setLanguage(lang);
+    refreshTrayMenu(tray, mainWindow!, app);
   });
 
   // Gateway is handled by React renderer — these are no-op stubs to prevent IPC errors

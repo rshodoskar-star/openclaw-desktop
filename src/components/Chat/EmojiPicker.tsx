@@ -76,7 +76,7 @@ export function EmojiPicker({ onSelect, disabled }: EmojiPickerProps) {
                 setOpen(false);
               }}
               theme={theme === 'aegis-light' ? 'light' : 'dark'}
-              locale={language}
+              locale={language === 'zh' ? 'zh' : language}
               previewPosition="none"
               skinTonePosition="search"
               maxFrequentRows={2}

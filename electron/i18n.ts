@@ -32,6 +32,28 @@ const translations: Record<string, LangMap> = {
     },
   },
 
+  zh: {
+    splash: {
+      loading: '加载中…',
+    },
+    contextMenu: {
+      openLink:  '🔗 打开链接',
+      copyLink:  '📋 复制链接',
+      cut:       '剪切',
+      copy:      '复制',
+      paste:     '粘贴',
+      selectAll: '全选',
+    },
+    dialog: {
+      saveImage:  '保存图片',
+      imageSaved: '图片已保存',
+    },
+    tray: {
+      open:  'Æ 打开 AEGIS',
+      close: '❌ 退出',
+    },
+  },
+
   ar: {
     splash: {
       loading: 'جاري التحميل...',
@@ -66,9 +88,9 @@ export function initI18n(
   configLang?: string | null,
 ): void {
   // Priority: config (user-chosen in app) > installer > 'en'
-  if (configLang === 'ar' || configLang === 'en') {
+  if (configLang === 'ar' || configLang === 'en' || configLang === 'zh') {
     _lang = configLang;
-  } else if (installerLang === 'ar' || installerLang === 'en') {
+  } else if (installerLang === 'ar' || installerLang === 'en' || installerLang === 'zh') {
     _lang = installerLang;
   }
   console.log(`[i18n] main-process language: ${_lang}`);
@@ -80,7 +102,7 @@ export function initI18n(
  * can push language changes to native menus.
  */
 export function setLanguage(lang: string): void {
-  if (lang === 'ar' || lang === 'en') {
+  if (lang === 'ar' || lang === 'en' || lang === 'zh') {
     _lang = lang;
     console.log(`[i18n] language updated: ${_lang}`);
   }

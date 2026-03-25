@@ -72,8 +72,10 @@ export function CommandPalette() {
     }},
 
     // ── Settings ──
-    { id: 'set-lang', icon: Globe, name: t('palette.toggleLanguage'), keywords: ['language', 'لغة', 'english', 'عربي'], action: () => {
-      const newLang = language === 'ar' ? 'en' : 'ar';
+    { id: 'set-lang', icon: Globe, name: t('palette.toggleLanguage'), keywords: ['language', 'لغة', 'english', 'عربي', '中文', 'chinese', 'zh'], action: () => {
+      const order: Array<'en' | 'ar' | 'zh'> = ['en', 'ar', 'zh'];
+      const idx = order.indexOf(language);
+      const newLang = order[(idx === -1 ? 0 : idx + 1) % order.length];
       setLanguage(newLang);
       changeLanguage(newLang);
     }},

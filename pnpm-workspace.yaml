@@ -1,0 +1,10 @@
+ignoredBuiltDependencies:
+  - electron
+  - electron-winstaller
+  - esbuild
+  - node-pty
+  - protobufjs
+
+onlyBuiltDependencies:
+  - electron
+  - electron-winstaller

@@ -13,6 +13,13 @@ const api = {
   // ── Installer Language (sync, available immediately) ──
   installerLanguage,
 
+  // ── Main-process i18n (tray / native UI) ──
+  i18n: {
+    setLanguage: (lang: string) => {
+      ipcRenderer.send('i18n:setLanguage', lang);
+    },
+  },
+
   // ── Window Controls ──
   window: {
     minimize: () => ipcRenderer.invoke('window:minimize'),

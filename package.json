@@ -33,6 +33,7 @@
     "i18next": "^25.8.4",
     "lucide-react": "^0.469.0",
     "node-pty": "^1.0.0",
+    "onnxruntime-web": "^1.24.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.5.4",
@@ -142,5 +143,6 @@
   },
   "overrides": {
     "yauzl": "3.2.1"
-  }
+  },
+  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
 }

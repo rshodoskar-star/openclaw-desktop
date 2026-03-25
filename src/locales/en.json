@@ -28,7 +28,54 @@
     "terminal": "Terminal",
     "notifications": "Notifications",
     "calendar": "Calendar",
-    "voiceLive": "Voice Chat"
+    "voiceLive": "Voice Chat",
+    "plugins": "Plugins"
+  },
+  "pluginsPage": {
+    "title": "🧩 Plugins",
+    "subtitle": "Extra pages and tools available in AEGIS Desktop",
+    "open": "Open",
+    "backAria": "Back to Plugins",
+    "loading": "Loading…",
+    "notFound": "Plugin component not found",
+    "items": {
+      "pixel-agents": {
+        "name": "Pixel Agents",
+        "description": "Your virtual pixel art office"
+      },
+      "sessions": {
+        "name": "Session Manager",
+        "description": "Manage active sessions"
+      },
+      "logs": {
+        "name": "Logs Viewer",
+        "description": "View system logs"
+      },
+      "multi-agent": {
+        "name": "Multi-Agent",
+        "description": "Live multi-agent view"
+      },
+      "files": {
+        "name": "File Manager",
+        "description": "Browse and manage files"
+      },
+      "sandbox": {
+        "name": "Code Interpreter",
+        "description": "Code execution sandbox"
+      },
+      "tools": {
+        "name": "MCP Tools",
+        "description": "Available MCP tools"
+      },
+      "skills": {
+        "name": "Skills",
+        "description": "Available skills and tools"
+      },
+      "memory": {
+        "name": "Memory Explorer",
+        "description": "Explore memory entries"
+      }
+    }
   },
   "skills": {
     "title": "Skills",
@@ -306,7 +353,7 @@
     "reconnect": "Reconnect",
     "connectGateway": "Connect to Gateway",
     "toggleTheme": "Toggle Theme",
-    "toggleLanguage": "Switch to Arabic",
+    "toggleLanguage": "Cycle language (EN → AR → ZH)",
     "toggleNotifications": "Toggle Notifications",
     "searchPlaceholder": "Search commands...",
     "searchBarHint": "Search..."

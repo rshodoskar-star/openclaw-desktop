@@ -12,7 +12,7 @@ import { APP_VERSION } from '@/hooks/useAppVersion';
 import { GlassCard } from '@/components/shared/GlassCard';
 import { PageTransition } from '@/components/shared/PageTransition';
 import { StatusDot } from '@/components/shared/StatusDot';
-import { useSettingsStore } from '@/stores/settingsStore';
+import { useSettingsStore, type AppLanguage } from '@/stores/settingsStore';
 import { useChatStore } from '@/stores/chatStore';
 import { useGatewayDataStore } from '@/stores/gatewayDataStore';
 import { gateway } from '@/services/gateway/index';
@@ -51,7 +51,7 @@ export function SettingsPageFull() {
   const mainModel = mainSession?.model || '—';
   const contextTokens = mainSession?.contextTokens || 0;
 
-  const handleLanguageChange = (lang: 'ar' | 'en') => {
+  const handleLanguageChange = (lang: AppLanguage) => {
     setLanguage(lang);
     changeLanguage(lang);
   };
@@ -174,11 +174,11 @@ export function SettingsPageFull() {
           <Globe size={16} className="text-aegis-primary" />
           {t('settings.language')}
         </h3>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => handleLanguageChange('ar')}
             className={clsx(
-              'flex-1 py-3 rounded-xl text-[14px] font-medium border transition-colors',
+              'flex-1 min-w-[100px] py-3 rounded-xl text-[14px] font-medium border transition-colors',
               language === 'ar'
                 ? 'bg-aegis-primary/15 border-aegis-primary/30 text-aegis-primary'
                 : 'border-aegis-border/20 text-aegis-text-dim hover:border-aegis-border/40'
@@ -189,13 +189,24 @@ export function SettingsPageFull() {
           <button
             onClick={() => handleLanguageChange('en')}
             className={clsx(
-              'flex-1 py-3 rounded-xl text-[14px] font-medium border transition-colors',
+              'flex-1 min-w-[100px] py-3 rounded-xl text-[14px] font-medium border transition-colors',
               language === 'en'
                 ? 'bg-aegis-primary/15 border-aegis-primary/30 text-aegis-primary'
                 : 'border-aegis-border/20 text-aegis-text-dim hover:border-aegis-border/40'
             )}
           >
             English
+          </button>
+          <button
+            onClick={() => handleLanguageChange('zh')}
+            className={clsx(
+              'flex-1 min-w-[100px] py-3 rounded-xl text-[14px] font-medium border transition-colors',
+              language === 'zh'
+                ? 'bg-aegis-primary/15 border-aegis-primary/30 text-aegis-primary'
+                : 'border-aegis-border/20 text-aegis-text-dim hover:border-aegis-border/40'
+            )}
+          >
+            简体中文
           </button>
         </div>
       </GlassCard>
