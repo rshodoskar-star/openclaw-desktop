@@ -171,7 +171,7 @@ function NoBridgeState() {
         <div className="text-[12px] text-aegis-text-dim max-w-[320px] leading-relaxed">
           {t(
             'fileManager.noBridgeDesc',
-            'File browsing requires the Electron IPC bridge (window.aegis). This feature is only available inside the AEGIS Desktop app.'
+            'File browsing requires the Electron IPC bridge (window.aegis). This feature is only available inside the OpenClaw Station app.'
           )}
         </div>
         <div className="mt-3 px-4 py-2 rounded-lg bg-[rgb(var(--aegis-overlay)/0.04)] border border-[rgb(var(--aegis-overlay)/0.08)] inline-block">

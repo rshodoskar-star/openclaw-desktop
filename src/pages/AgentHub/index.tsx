@@ -690,7 +690,7 @@ export function AgentHubPage() {
   };
 
   return (
-    <PageTransition className="p-6 space-y-6 max-w-[1200px] mx-auto">
+    <PageTransition className="p-6 space-y-6 mx-auto">
 
       {/* ══ Header ══ */}
       <div className="flex items-center justify-between">

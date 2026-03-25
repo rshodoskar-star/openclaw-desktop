@@ -3,6 +3,7 @@
 // ═══════════════════════════════════════════════════════════
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Download, FileText, Copy, Check } from 'lucide-react';
 
 interface ExportMenuProps {
@@ -11,6 +12,7 @@ interface ExportMenuProps {
 }
 
 export function ExportMenu({ onExportCSV, onCopyText }: ExportMenuProps) {
+  const { t }               = useTranslation();
   const [open, setOpen]     = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -30,7 +32,7 @@ export function ExportMenu({ onExportCSV, onCopyText }: ExportMenuProps) {
         {copied
           ? <Check size={14} className="text-aegis-success" />
           : <Download size={14} />}
-        <span>{copied ? 'Copied!' : 'Export'}</span>
+        <span>{copied ? t('analytics.exportCopied') : t('analytics.export')}</span>
       </button>
 
       {open && (
@@ -48,14 +50,14 @@ export function ExportMenu({ onExportCSV, onCopyText }: ExportMenuProps) {
               className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-[rgb(var(--aegis-overlay)/0.05)] text-[12px] text-aegis-text-muted text-start transition-colors"
             >
               <FileText size={14} className="text-aegis-accent shrink-0" />
-              <span>Download CSV</span>
+              <span>{t('analytics.downloadCSV')}</span>
             </button>
             <button
               onClick={handleCopy}
               className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-[rgb(var(--aegis-overlay)/0.05)] text-[12px] text-aegis-text-muted text-start transition-colors"
             >
               <Copy size={14} className="text-aegis-primary shrink-0" />
-              <span>Copy Summary</span>
+              <span>{t('analytics.copySummary')}</span>
             </button>
           </div>
         </>

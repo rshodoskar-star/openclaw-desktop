@@ -40,7 +40,7 @@ export function DateRangePicker({
   }[] = [
     {
       id: 'today',
-      label: t('analytics.today', 'Today'),
+      label: t('analytics.today'),
       getRange: () => {
         const d = fmtDate(new Date());
         return { start: d, end: d };
@@ -48,7 +48,7 @@ export function DateRangePicker({
     },
     {
       id: '7d',
-      label: t('analytics.last7Days', 'Last 7 Days'),
+      label: t('analytics.last7Days'),
       getRange: () => {
         const now   = new Date();
         const start = new Date(now);
@@ -58,7 +58,7 @@ export function DateRangePicker({
     },
     {
       id: 'thisMonth',
-      label: t('analytics.thisMonth', 'This Month'),
+      label: t('analytics.thisMonth'),
       getRange: () => {
         const now = new Date();
         return {
@@ -69,7 +69,7 @@ export function DateRangePicker({
     },
     {
       id: '30d',
-      label: t('analytics.last30Days', 'Last 30 Days'),
+      label: t('analytics.last30Days'),
       getRange: () => {
         const now   = new Date();
         const start = new Date(now);
@@ -79,7 +79,7 @@ export function DateRangePicker({
     },
     {
       id: '90d',
-      label: t('analytics.last90Days', 'Last 90 Days'),
+      label: t('analytics.last90Days'),
       getRange: () => {
         const now   = new Date();
         const start = new Date(now);
@@ -89,7 +89,7 @@ export function DateRangePicker({
     },
     {
       id: 'all',
-      label: t('analytics.allTime', 'All Time'),
+      label: t('analytics.allTime'),
       getRange: () => ({ start: '', end: '' }),
     },
   ];
@@ -131,7 +131,7 @@ export function DateRangePicker({
         <div className="flex items-center gap-2 text-aegis-text-muted shrink-0">
           <Calendar size={13} />
           <span className="text-[10px] uppercase tracking-widest font-bold">
-            {t('analytics.dateRange', 'Date Range')}
+            {t('analytics.dateRange')}
           </span>
         </div>
 
@@ -186,7 +186,7 @@ export function DateRangePicker({
             )}
           >
             <Save size={11} />
-            {t('analytics.apply', 'Apply')}
+            {t('analytics.apply')}
           </button>
         </div>
 

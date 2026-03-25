@@ -7,6 +7,7 @@
 // ═══════════════════════════════════════════════════════════
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ShieldCheck, RefreshCw, X, Loader2, Key, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 interface PairingScreenProps {
@@ -23,6 +24,7 @@ interface PairingScreenProps {
 type PairingState = 'idle' | 'requesting' | 'waiting' | 'waiting-cli' | 'approved' | 'error';
 
 export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage }: PairingScreenProps) {
+  const { t } = useTranslation();
   const [state, setState] = useState<PairingState>('idle');
   const [code, setCode] = useState<string>('');
   const [deviceId, setDeviceId] = useState<string>('');
@@ -73,16 +75,16 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             clientId: 'openclaw-control-ui',
-            clientName: 'AEGIS Desktop',
+            clientName: 'OpenClaw Station',
             platform: navigator.platform?.toLowerCase().includes('mac') ? 'macos' : navigator.platform?.toLowerCase().includes('linux') ? 'linux' : 'windows',
             scopes: ['operator.read', 'operator.write', 'operator.admin'],
           }),
         });
         if (!res.ok) {
           if (res.status === 405) {
-            throw new Error('Gateway does not support pairing. Please update OpenClaw to v2026.2.19 or later.');
+            throw new Error(t('pairing.pairingNotSupported'));
           }
-          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+          throw new Error(t('pairing.httpError', { status: res.status, statusText: res.statusText }));
         }
         result = await res.json();
       }
@@ -98,14 +100,14 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
     } catch (err: any) {
       if (!mountedRef.current) return;
       console.error('[Pairing] Request failed:', err);
-      setError(err.message || 'Failed to request pairing');
+      setError(err.message || t('pairing.requestPairingFailed'));
       // /v1/pair not available — fall back to CLI approval mode
       // Gateway is retrying WS connection every 5s in the background;
       // when the user approves via CLI, the next retry will succeed
       // and App.tsx onStatusChange will dismiss this screen automatically.
       setState('waiting-cli');
     }
-  }, [gatewayHttpUrl]);
+  }, [gatewayHttpUrl, t]);
 
   const startPolling = useCallback((devId: string) => {
     if (pollTimerRef.current) clearInterval(pollTimerRef.current);
@@ -150,7 +152,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
             pollTimerRef.current = null;
           }
           setState('error');
-          setError('Pairing was rejected. Please try again.');
+          setError(t('pairing.pairingRejected'));
         }
         // 'pending' → keep polling
       } catch (err: any) {
@@ -158,7 +160,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
         console.warn('[Pairing] Poll error (will retry):', err.message);
       }
     }, 3000);
-  }, [gatewayHttpUrl, onPaired]);
+  }, [gatewayHttpUrl, onPaired, t]);
 
   return (
     <div
@@ -185,7 +187,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
         <button
           onClick={onCancel}
           className="absolute top-4 end-4 p-1.5 rounded-lg text-aegis-text-dim hover:text-aegis-text-secondary hover:bg-aegis-glass transition-colors"
-          title="Cancel"
+          title={t('pairing.cancel')}
         >
           <X size={18} />
         </button>
@@ -219,12 +221,12 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
           {/* Title */}
           <h2 className="text-xl font-bold text-aegis-text mb-2">
             {state === 'approved'
-              ? 'Paired Successfully!'
+              ? t('pairing.pairedSuccess')
               : state === 'error'
-                ? 'Pairing Error'
+                ? t('pairing.pairingError')
                 : state === 'waiting-cli'
-                  ? 'Device Needs Approval'
-                  : 'Pair with Gateway'}
+                  ? t('pairing.needsApproval')
+                  : t('pairing.pairWithGateway')}
           </h2>
 
           {/* Subtitle / Error */}
@@ -242,7 +244,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
           {(state === 'waiting' || state === 'approved') && code && (
             <div className="w-full mb-6">
               <p className="text-sm text-aegis-text-muted mb-3">
-                Enter this code in Gateway:
+                {t('pairing.enterCode')}
               </p>
 
               {/* Code display */}
@@ -260,13 +262,11 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
                 <div className="mt-5 space-y-2 text-start">
                   <p className="text-xs text-aegis-text-dim flex items-center gap-2">
                     <ShieldCheck size={14} className="text-aegis-primary shrink-0" />
-                    <span>
-                      Open Terminal and run: openclaw devices approve
-                    </span>
+                    <span>{t('pairing.openTerminal')}</span>
                   </p>
                   <p className="text-xs text-aegis-text-dim flex items-center gap-2">
                     <ShieldCheck size={14} className="text-aegis-primary shrink-0" />
-                    <span>Or approve from the OpenClaw Control UI</span>
+                    <span>{t('pairing.orApproveFromUI')}</span>
                   </p>
                 </div>
               )}
@@ -275,7 +275,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
               {state === 'waiting' && (
                 <div className="mt-4 flex items-center justify-center gap-2 text-xs text-aegis-text-dim">
                   <Loader2 size={12} className="animate-spin text-aegis-primary" />
-                  <span>Waiting for approval...</span>
+                  <span>{t('pairing.waitingApproval')}</span>
                 </div>
               )}
             </div>
@@ -285,7 +285,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
           {state === 'requesting' && (
             <div className="my-6 flex items-center gap-2 text-sm text-aegis-text-muted">
               <Loader2 size={16} className="animate-spin text-aegis-primary" />
-              <span>Requesting pairing...</span>
+              <span>{t('pairing.requestingPairing')}</span>
             </div>
           )}
 
@@ -293,13 +293,13 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
           {state === 'waiting-cli' && (
             <div className="w-full mb-6">
               <p className="text-sm text-aegis-text-muted mb-4">
-                Your device needs approval from the OpenClaw Gateway. Run one of the commands below:
+                {t('pairing.needsApprovalCliBody')}
               </p>
 
               {/* Windows command */}
               <div className="mb-3">
                 <p className="text-xs text-aegis-text-dim mb-1.5 font-semibold flex items-center gap-1.5">
-                  <span>💻</span> If OpenClaw is installed on Windows (CMD / PowerShell):
+                  <span>💻</span> {t('pairing.windowsCmdHint')}
                 </p>
                 <div className="py-2.5 px-4 rounded-xl bg-aegis-bg-solid border border-aegis-border font-mono text-sm text-aegis-primary select-all" dir="ltr">
                   openclaw devices approve
@@ -309,7 +309,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
               {/* Docker command */}
               <div className="mb-3">
                 <p className="text-xs text-aegis-text-dim mb-1.5 font-semibold flex items-center gap-1.5">
-                  <span>🐳</span> If OpenClaw runs inside Docker:
+                  <span>🐳</span> {t('pairing.dockerCmdHint')}
                 </p>
                 <div className="py-2.5 px-4 rounded-xl bg-aegis-bg-solid border border-aegis-border font-mono text-xs text-aegis-primary select-all" dir="ltr">
                   docker exec openclaw-gateway openclaw devices approve
@@ -320,18 +320,18 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
               <div className="mt-4 space-y-2 text-start">
                 <p className="text-xs text-aegis-text-dim flex items-center gap-2">
                   <ShieldCheck size={14} className="text-aegis-primary shrink-0" />
-                  <span>Or approve from the OpenClaw Control UI (Dashboard)</span>
+                  <span>{t('pairing.orApproveFromUIFull')}</span>
                 </p>
                 <p className="text-xs text-aegis-text-dim flex items-center gap-2">
                   <ShieldCheck size={14} className="text-aegis-primary shrink-0" />
-                  <span>Approval is needed once only — after that it connects automatically</span>
+                  <span>{t('pairing.oneTimeOnly')}</span>
                 </p>
               </div>
 
               {/* Polling indicator */}
               <div className="mt-5 flex items-center justify-center gap-2 text-xs text-aegis-text-dim">
                 <Loader2 size={12} className="animate-spin text-aegis-primary" />
-                <span>Waiting for approval... (retrying every 5s)</span>
+                <span>{t('pairing.waitingApprovalRetry')}</span>
               </div>
             </div>
           )}
@@ -340,7 +340,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
           {state === 'approved' && (
             <div className="my-4 flex items-center gap-2 text-sm text-aegis-primary">
               <CheckCircle2 size={16} />
-              <span>Reconnecting...</span>
+              <span>{t('pairing.reconnecting')}</span>
             </div>
           )}
 
@@ -354,7 +354,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
                   transition-colors"
               >
                 <RefreshCw size={16} />
-                <span>Retry</span>
+                <span>{t('pairing.retry')}</span>
               </button>
             )}
             {(state === 'error' || state === 'idle' || state === 'waiting-cli') && (
@@ -364,7 +364,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
                   text-aegis-text-muted hover:text-aegis-text hover:border-aegis-border-hover text-sm
                   transition-colors"
               >
-                Cancel
+                {t('pairing.cancel')}
               </button>
             )}
           </div>
@@ -379,18 +379,18 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
                   onClick={() => setShowManualToken(true)}
                   className="text-xs text-aegis-primary hover:text-aegis-accent transition-colors w-full text-center"
                 >
-                  Enter token manually
+                  {t('pairing.enterTokenManually')}
                 </button>
               ) : (
                 <div className="space-y-3">
                   <p className="text-xs text-aegis-text-muted text-center">
-                    Enter the Gateway Token from OpenClaw settings:
+                    {t('pairing.enterTokenDesc')}
                   </p>
                   <input
                     type="password"
                     value={manualToken}
                     onChange={(e) => setManualToken(e.target.value)}
-                    placeholder="Paste token here..."
+                    placeholder={t('pairing.pasteToken')}
                     className="w-full px-3 py-2 rounded-lg bg-aegis-bg-solid border border-aegis-border text-sm text-aegis-text placeholder:text-aegis-text-dim focus:outline-none focus:border-aegis-primary"
                     dir="ltr"
                   />
@@ -406,7 +406,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
                     disabled={!manualToken.trim()}
                     className="w-full py-2 rounded-xl bg-aegis-primary hover:bg-[rgb(var(--aegis-primary-hover))] text-aegis-btn-primary-text font-semibold text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    Connect
+                    {t('pairing.connect')}
                   </button>
                 </div>
               )}
@@ -417,7 +417,7 @@ export function PairingScreen({ gatewayHttpUrl, onPaired, onCancel, errorMessage
         {/* Bottom info */}
         <div className="px-8 pb-6">
           <div className="text-[10px] text-aegis-text-dim text-center leading-relaxed">
-            AEGIS Desktop needs a valid token to connect to the OpenClaw Gateway. This pairing is done once only.
+            {t('pairing.tokenExplanation')}
           </div>
         </div>
       </div>

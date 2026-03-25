@@ -1,13 +1,13 @@
 {
-  "name": "aegis-desktop",
+  "name": "openclaw-station",
   "version": "5.6.0",
-  "description": "AEGIS Desktop — Advanced Chat Client for OpenClaw Gateway",
+  "description": "OpenClaw Station — Advanced Chat Client for OpenClaw Gateway",
   "main": "dist-electron/main.js",
-  "author": "Rashed",
+  "author": "metacode0602",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AegisStar/aegis-desktop.git"
+    "url": "https://github.com/metacode0602/openclaw-station.git"
   },
   "scripts": {
     "dev": "concurrently --kill-others-on-fail \"vite\" \"wait-on http://localhost:5173 && node scripts/build-electron.js && electron . --enable-logging\"",
@@ -64,9 +64,9 @@
     "wait-on": "^8.0.3"
   },
   "build": {
-    "appId": "com.aegis.desktop",
-    "productName": "AEGIS Desktop",
-    "copyright": "Copyright © 2026 Rashed",
+    "appId": "cn.openmcp.openclaw.station",
+    "productName": "OpenClaw Station",
+    "copyright": "Copyright © 2026 metacode0602",
     "asar": true,
     "asarUnpack": [
       "node_modules/node-pty/**/*"
@@ -90,8 +90,8 @@
       "allowElevation": true,
       "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
-      "shortcutName": "AEGIS Desktop",
-      "menuCategory": "AEGIS",
+      "shortcutName": "OpenClaw Station",
+      "menuCategory": "OpenClaw",
       "perMachine": false,
       "installerIcon": "assets/icon.ico",
       "uninstallerIcon": "assets/icon.ico",
@@ -104,7 +104,8 @@
       "include": "installer/nsis-script.nsh",
       "installerLanguages": [
         "en_US",
-        "ar_SA"
+        "ar_SA",
+        "zh_CN"
       ]
     },
     "directories": {
@@ -135,8 +136,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "rshodoskar-star",
-        "repo": "openclaw-desktop"
+        "owner": "metacode0602",
+        "repo": "openclaw-station"
       }
     ],
     "npmRebuild": false

@@ -12,7 +12,7 @@ export interface AgentAdapterResult {
 }
 
 /**
- * Hook that bridges AEGIS Desktop chat state to Pixel Agents game engine.
+ * Hook that bridges OpenClaw Station chat state to Pixel Agents game engine.
  * Watches isTyping and messages to determine agent activity state.
  */
 export function useAgentAdapter(): AgentAdapterResult {

@@ -34,7 +34,7 @@ import { notifications } from '@/services/notifications';
 import { changeLanguage } from '@/i18n';
 
 // ═══════════════════════════════════════════════════════════
-// AEGIS Desktop v4.0 — Mission Control
+// OpenClaw Station v4.0 — Mission Control
 // ═══════════════════════════════════════════════════════════
 
 export default function App() {

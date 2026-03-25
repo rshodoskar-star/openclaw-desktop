@@ -45,10 +45,10 @@ export function ChartsSection({ chartData, donutData, totalCost }: ChartsSection
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp size={13} className="text-aegis-accent" />
             <span className="text-[10px] text-aegis-text-dim uppercase tracking-widest font-bold">
-              {t('analytics.dailyCost', 'Daily Cost')}
+              {t('analytics.dailyCost')}
             </span>
             <span className="text-[9px] text-aegis-text-dim ms-auto font-mono">
-              {chartData.length} data points
+              {t('analytics.dataPoints', { count: chartData.length })}
             </span>
           </div>
 
@@ -88,7 +88,7 @@ export function ChartsSection({ chartData, donutData, totalCost }: ChartsSection
                   <Area
                     type="monotone"
                     dataKey="output"
-                    name="Output Cost"
+                    name={t('analytics.chartSeriesOutputCost')}
                     stroke={themeHex('primary')}
                     strokeWidth={1.5}
                     fill="url(#gradOut)"
@@ -98,7 +98,7 @@ export function ChartsSection({ chartData, donutData, totalCost }: ChartsSection
                   <Area
                     type="monotone"
                     dataKey="input"
-                    name="Input Cost"
+                    name={t('analytics.chartSeriesInputCost')}
                     stroke={themeHex('accent')}
                     strokeWidth={1.5}
                     fill="url(#gradFull)"
@@ -111,7 +111,7 @@ export function ChartsSection({ chartData, donutData, totalCost }: ChartsSection
           ) : (
             <div className="flex items-center justify-center h-[220px] text-aegis-text-dim text-[12px]">
               <BarChart3 size={20} className="me-2 opacity-30" />
-              {t('analytics.notEnoughData', 'Not enough data yet')}
+              {t('analytics.notEnoughData')}
             </div>
           )}
 
@@ -119,11 +119,11 @@ export function ChartsSection({ chartData, donutData, totalCost }: ChartsSection
           <div className="flex justify-center gap-4 mt-3">
             <div className="flex items-center gap-1.5 text-[10px] text-aegis-text-muted">
               <div className="w-2 h-2 rounded-sm" style={{ background: 'rgb(var(--aegis-accent))' }} />
-              Input Cost
+              {t('analytics.legendInputCost')}
             </div>
             <div className="flex items-center gap-1.5 text-[10px] text-aegis-text-muted">
               <div className="w-2 h-2 rounded-sm" style={{ background: 'rgb(var(--aegis-primary))' }} />
-              Output Cost
+              {t('analytics.legendOutputCost')}
             </div>
           </div>
         </GlassCard>
@@ -135,7 +135,7 @@ export function ChartsSection({ chartData, donutData, totalCost }: ChartsSection
           <div className="flex items-center gap-2 mb-4">
             <Package size={13} className="text-[var(--aegis-data-5)]" />
             <span className="text-[10px] text-aegis-text-dim uppercase tracking-widest font-bold">
-              {t('analytics.costByAgent', 'Cost by Agent')}
+              {t('analytics.costByAgent')}
             </span>
           </div>
 
@@ -203,14 +203,14 @@ export function ChartsSection({ chartData, donutData, totalCost }: ChartsSection
                 })}
                 {donutData.length > 6 && (
                   <div className="text-[9px] text-aegis-text-dim text-center">
-                    +{donutData.length - 6} more agents
+                    {t('analytics.moreAgents', { count: donutData.length - 6 })}
                   </div>
                 )}
               </div>
             </>
           ) : (
             <div className="flex items-center justify-center h-[220px] text-aegis-text-dim text-[12px]">
-              No agent data yet
+              {t('analytics.noAgentData')}
             </div>
           )}
         </GlassCard>

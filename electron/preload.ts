@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
 // ═══════════════════════════════════════════════════════════
-// AEGIS Desktop — Preload Bridge
+// OpenClaw Station — Preload Bridge
 // ═══════════════════════════════════════════════════════════
 
 // Read installer language from process.argv (passed via additionalArguments in main.ts)

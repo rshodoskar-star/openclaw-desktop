@@ -40,9 +40,11 @@ export function DailyBreakdownTable({ daily }: DailyBreakdownTableProps) {
         <div className="flex items-center gap-2">
           <Activity size={14} className="text-aegis-warning" />
           <span className="text-[10px] text-aegis-text-dim uppercase tracking-widest font-bold">
-            {t('analytics.dailyBreakdown', 'Daily Breakdown')}
+            {t('analytics.dailyBreakdown')}
           </span>
-          <span className="text-[9px] text-aegis-text-dim font-mono">({daily.length} days)</span>
+          <span className="text-[9px] text-aegis-text-dim font-mono">
+            {t('analytics.dailyDaysParen', { count: daily.length })}
+          </span>
         </div>
         {/* Sort toggle */}
         <button
@@ -50,9 +52,7 @@ export function DailyBreakdownTable({ daily }: DailyBreakdownTableProps) {
           className="flex items-center gap-1 text-[10px] text-aegis-text-muted hover:text-aegis-text-secondary transition-colors"
         >
           {sortDesc ? <ChevronDown size={12} /> : <ChevronUp size={12} />}
-          {sortDesc
-            ? t('analytics.newest', 'Newest')
-            : t('analytics.oldest', 'Oldest')}
+          {sortDesc ? t('analytics.newest') : t('analytics.oldest')}
         </button>
       </div>
 
@@ -60,13 +60,27 @@ export function DailyBreakdownTable({ daily }: DailyBreakdownTableProps) {
         <table className="w-full">
           <thead>
             <tr className="border-b border-[rgb(var(--aegis-overlay)/0.06)]">
-              <th className="text-start text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2 ps-2">Date</th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">Input</th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">Output</th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">Cache Read</th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">Cache Write</th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">Total Tokens</th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2 pe-2">Cost</th>
+              <th className="text-start text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2 ps-2">
+                {t('analytics.tblDate')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
+                {t('analytics.labelInput')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
+                {t('analytics.labelOutput')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
+                {t('analytics.cacheRead')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
+                {t('analytics.cacheWrite')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
+                {t('analytics.tblTotalTokens')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2 pe-2">
+                {t('analytics.tblCost')}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -115,7 +129,7 @@ export function DailyBreakdownTable({ daily }: DailyBreakdownTableProps) {
           <tfoot>
             <tr className="border-t border-[rgb(var(--aegis-overlay)/0.06)]">
               <td className="py-2.5 ps-2 text-[10px] font-bold text-aegis-text-muted">
-                {t('analytics.total', 'Total')} ({daily.length} days)
+                {t('analytics.totalWithDays', { count: daily.length })}
               </td>
               <td className="py-2.5 text-end text-[10px] font-mono font-bold text-aegis-accent/70">
                 {formatTokens(daily.reduce((s, d) => s + d.input, 0))}
@@ -147,11 +161,11 @@ export function DailyBreakdownTable({ daily }: DailyBreakdownTableProps) {
           className="w-full mt-3 py-2 text-[11px] text-aegis-text-dim hover:text-aegis-text-muted transition-colors border-t border-[rgb(var(--aegis-overlay)/0.04)] flex items-center justify-center gap-1"
         >
           {expanded ? (
-            <><ChevronUp size={12} /> {t('analytics.showLess', 'Show less')}</>
+            <><ChevronUp size={12} /> {t('analytics.showLess')}</>
           ) : (
             <>
               <ChevronDown size={12} />
-              {t('analytics.showAll', 'Show all {{count}} days', { count: daily.length })}
+              {t('analytics.showAll', { count: daily.length })}
             </>
           )}
         </button>

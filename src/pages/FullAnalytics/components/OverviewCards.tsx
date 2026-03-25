@@ -34,14 +34,19 @@ export function OverviewCards({
       <BigStatCard
         iconEmoji="💰"
         value={totals.totalCost}
-        label={t('analytics.totalCost', 'Total Cost')}
+        label={t('analytics.totalCost')}
         color={themeHex('accent')}
         prefix="$"
         decimals={2}
         delay={0}
-        sub={`in: ${formatUsd(totals.inputCost)} · out: ${formatUsd(totals.outputCost)}`}
+        sub={t('analytics.subInOutCost', {
+          input: formatUsd(totals.inputCost),
+          output: formatUsd(totals.outputCost),
+        })}
         sub2={totals.cacheReadCost > 0
-          ? `cache: ${formatUsd(totals.cacheReadCost + totals.cacheWriteCost)}`
+          ? t('analytics.subCacheUsd', {
+              value: formatUsd(totals.cacheReadCost + totals.cacheWriteCost),
+            })
           : undefined}
       />
 
@@ -49,13 +54,16 @@ export function OverviewCards({
       <BigStatCard
         iconEmoji="⚡"
         value={formatTokens(totals.totalTokens)}
-        label={t('analytics.totalTokens', 'Total Tokens')}
+        label={t('analytics.totalTokens')}
         color={themeHex('warning')}
         decimals={0}
         delay={0.05}
-        sub={`in: ${formatTokens(totals.input)} · out: ${formatTokens(totals.output)}`}
+        sub={t('analytics.subInOutTokens', {
+          input: formatTokens(totals.input),
+          output: formatTokens(totals.output),
+        })}
         sub2={totals.cacheRead > 0
-          ? `cache: ${formatTokens(totals.cacheRead)}`
+          ? t('analytics.subCacheTokens', { value: formatTokens(totals.cacheRead) })
           : undefined}
       />
 
@@ -63,34 +71,38 @@ export function OverviewCards({
       <BigStatCard
         iconEmoji="📦"
         value={sessionsCount}
-        label={t('analytics.sessions', 'Sessions')}
+        label={t('analytics.sessions')}
         color={dataColor(4)}
         decimals={0}
         delay={0.1}
-        sub={aggregates ? `${aggregates.messages.total.toLocaleString()} messages` : undefined}
+        sub={aggregates
+          ? t('analytics.messagesCount', {
+              count: aggregates.messages.total.toLocaleString(),
+            })
+          : undefined}
       />
 
       {/* API Calls */}
       <BigStatCard
         iconEmoji="💬"
         value={totalApiCalls}
-        label={t('analytics.apiCalls', 'API Calls')}
+        label={t('analytics.apiCalls')}
         color={themeHex('primary')}
         decimals={0}
         delay={0.15}
-        sub={byModel.length > 0 ? `${byModel.length} models used` : undefined}
+        sub={byModel.length > 0 ? t('analytics.modelsUsed', { count: byModel.length }) : undefined}
       />
 
       {/* Days of Data */}
       <BigStatCard
         iconEmoji="📅"
         value={periodInfo.days}
-        label={t('analytics.periodDays', 'Days of Data')}
+        label={t('analytics.periodDays')}
         color={dataColor(6)}
         decimals={0}
         delay={0.2}
         sub={periodInfo.start !== '—' ? periodInfo.start : undefined}
-        sub2={periodInfo.end !== '—' ? `→ ${periodInfo.end}` : undefined}
+        sub2={periodInfo.end !== '—' ? t('analytics.periodToEnd', { end: periodInfo.end }) : undefined}
       />
     </div>
   );

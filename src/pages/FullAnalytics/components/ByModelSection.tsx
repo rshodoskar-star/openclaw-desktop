@@ -25,7 +25,7 @@ export function ByModelSection({ byModel }: ByModelSectionProps) {
       <div className="flex items-center gap-2 mb-4">
         <Cpu size={14} className="text-aegis-accent" />
         <span className="text-[10px] text-aegis-text-dim uppercase tracking-widest font-bold">
-          {t('analytics.byModel', 'By Model')}
+          {t('analytics.byModel')}
         </span>
       </div>
 
@@ -34,19 +34,25 @@ export function ByModelSection({ byModel }: ByModelSectionProps) {
           <thead>
             <tr className="border-b border-[rgb(var(--aegis-overlay)/0.06)]">
               <th className="text-start text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2 ps-2">
-                Model
+                {t('analytics.tblModel')}
               </th>
               <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
-                {t('analytics.calls', 'Calls')}
+                {t('analytics.calls')}
               </th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">Input</th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">Output</th>
-              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">Cache</th>
               <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
-                Total Tokens
+                {t('analytics.labelInput')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
+                {t('analytics.labelOutput')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
+                {t('analytics.tblCache')}
+              </th>
+              <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2">
+                {t('analytics.tblTotalTokens')}
               </th>
               <th className="text-end text-[9px] text-aegis-text-dim uppercase tracking-wider font-bold pb-2 pe-2">
-                Cost
+                {t('analytics.tblCost')}
               </th>
               <th className="w-16 pb-2" />
             </tr>

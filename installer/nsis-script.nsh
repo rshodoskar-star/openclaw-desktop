@@ -1,5 +1,5 @@
 ; ═══════════════════════════════════════════════════════════
-; AEGIS Desktop — Custom NSIS Installer Script
+; OpenClaw Station — Custom NSIS Installer Script
 ; Advanced Executive General Intelligence System
 ; ═══════════════════════════════════════════════════════════
 
@@ -10,8 +10,8 @@
 
 ; ── Custom Welcome Page Text ──
 !macro customWelcomePage
-  !define MUI_WELCOMEPAGE_TITLE "AEGIS Desktop v${VERSION}"
-  !define MUI_WELCOMEPAGE_TEXT "Welcome to AEGIS Desktop Setup.$\r$\n$\r$\nAdvanced Executive General Intelligence System$\r$\n$\r$\nThis wizard will install AEGIS Desktop on your computer.$\r$\nIt is recommended to close all other applications before continuing.$\r$\n$\r$\nClick Next to continue."
+  !define MUI_WELCOMEPAGE_TITLE "OpenClaw Station v${VERSION}"
+  !define MUI_WELCOMEPAGE_TEXT "Welcome to OpenClaw Station Setup.$\r$\n$\r$\nAdvanced Executive General Intelligence System$\r$\n$\r$\nThis wizard will install OpenClaw Station on your computer.$\r$\nIt is recommended to close all other applications before continuing.$\r$\n$\r$\nClick Next to continue."
 !macroend
 
 ; ── Custom Install Actions ──
@@ -20,8 +20,8 @@
   CreateDirectory "$PROFILE\clawdbot-shared\voice"
 
   ; Write app info to registry
-  WriteRegStr SHCTX "Software\AEGIS Desktop" "InstallLocation" "$INSTDIR"
-  WriteRegStr SHCTX "Software\AEGIS Desktop" "Version" "${VERSION}"
+  WriteRegStr SHCTX "Software\OpenClaw Station" "InstallLocation" "$INSTDIR"
+  WriteRegStr SHCTX "Software\OpenClaw Station" "Version" "${VERSION}"
 
   ; Save selected language for the app to read on first launch
   ; Arabic = 1025, English = 1033
@@ -38,5 +38,5 @@
 
 ; ── Custom Uninstall Actions ──
 !macro customUnInstall
-  DeleteRegKey SHCTX "Software\AEGIS Desktop"
+  DeleteRegKey SHCTX "Software\OpenClaw Station"
 !macroend

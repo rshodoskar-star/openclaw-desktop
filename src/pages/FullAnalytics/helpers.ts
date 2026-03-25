@@ -5,6 +5,7 @@
 
 import type { DailyEntry, CostTotals, ByAgentEntry, ByModelEntry } from './types';
 import { dataColor } from '@/utils/theme-colors';
+import i18n from '@/i18n';
 
 /** Format a token count to a human-readable string (k / M / B) */
 export function formatTokens(n: number): string {
@@ -69,7 +70,16 @@ export function getAgentIcon(agentId: string): string {
 
 /** Build a CSV string from the filtered daily entries */
 export function buildCSV(daily: DailyEntry[], totals: CostTotals): string {
-  const rows = ['Date,Input Tokens,Output Tokens,Cache Read,Cache Write,Total Tokens,Cost USD'];
+  const header = [
+    i18n.t('analytics.csvColDate'),
+    i18n.t('analytics.csvColInputTokens'),
+    i18n.t('analytics.csvColOutputTokens'),
+    i18n.t('analytics.csvColCacheRead'),
+    i18n.t('analytics.csvColCacheWrite'),
+    i18n.t('analytics.csvColTotalTokens'),
+    i18n.t('analytics.csvColCostUsd'),
+  ].join(',');
+  const rows = [header];
   [...daily]
     .sort((a, b) => a.date.localeCompare(b.date))
     .forEach((d) => {
@@ -77,7 +87,9 @@ export function buildCSV(daily: DailyEntry[], totals: CostTotals): string {
         `${d.date},${d.input},${d.output},${d.cacheRead},${d.cacheWrite},${d.totalTokens},${d.totalCost.toFixed(4)}`
       );
     });
-  rows.push(`TOTAL,-,-,-,-,${totals.totalTokens},${totals.totalCost.toFixed(4)}`);
+  rows.push(
+    `${i18n.t('analytics.csvTotal')},-,-,-,-,${totals.totalTokens},${totals.totalCost.toFixed(4)}`
+  );
   return rows.join('\n');
 }
 
@@ -111,41 +123,68 @@ export async function copyAnalyticsText({
   byModel,
 }: CopyTextParams): Promise<void> {
   const lines = [
-    `📊 Costs — Full Analytics Report — ${new Date().toLocaleDateString()}`,
-    `Period: ${periodInfo.start} → ${periodInfo.end} (${periodInfo.days} days)`,
+    i18n.t('analytics.copyReportTitle', { date: new Date().toLocaleDateString() }),
+    i18n.t('analytics.copyPeriod', {
+      start: periodInfo.start,
+      end: periodInfo.end,
+      count: periodInfo.days,
+    }),
     '',
-    `Total Cost:     ${formatUsd(totals.totalCost)}`,
-    `Total Tokens:   ${formatTokens(totals.totalTokens)}`,
-    `  Input:        ${formatTokens(totals.input)} (${formatUsd(totals.inputCost)})`,
-    `  Output:       ${formatTokens(totals.output)} (${formatUsd(totals.outputCost)})`,
-    `  Cache Read:   ${formatTokens(totals.cacheRead)} (${formatUsd(totals.cacheReadCost)})`,
-    `  Cache Write:  ${formatTokens(totals.cacheWrite)} (${formatUsd(totals.cacheWriteCost)})`,
-    `Sessions:       ${sessionsCount.toLocaleString()}`,
-    `API Calls:      ${totalApiCalls.toLocaleString()}`,
+    i18n.t('analytics.copyTotalCost', { value: formatUsd(totals.totalCost) }),
+    i18n.t('analytics.copyTotalTokens', { value: formatTokens(totals.totalTokens) }),
+    i18n.t('analytics.copyInputLine', {
+      tokens: formatTokens(totals.input),
+      cost: formatUsd(totals.inputCost),
+    }),
+    i18n.t('analytics.copyOutputLine', {
+      tokens: formatTokens(totals.output),
+      cost: formatUsd(totals.outputCost),
+    }),
+    i18n.t('analytics.copyCacheReadLine', {
+      tokens: formatTokens(totals.cacheRead),
+      cost: formatUsd(totals.cacheReadCost),
+    }),
+    i18n.t('analytics.copyCacheWriteLine', {
+      tokens: formatTokens(totals.cacheWrite),
+      cost: formatUsd(totals.cacheWriteCost),
+    }),
+    i18n.t('analytics.copySessions', { value: sessionsCount.toLocaleString() }),
+    i18n.t('analytics.copyApiCalls', { value: totalApiCalls.toLocaleString() }),
     '',
   ];
 
   if (byAgent.length > 0) {
-    lines.push('By Agent:');
+    lines.push(i18n.t('analytics.copyByAgent'));
     [...byAgent]
       .sort((a, b) => b.totals.totalCost - a.totals.totalCost)
-      .forEach((a) =>
+      .forEach((a) => {
+        const id = a.agentId === 'main' ? i18n.t('analytics.mainAgent') : a.agentId;
         lines.push(
-          `  ${a.agentId}: ${formatTokens(a.totals.totalTokens)} — ${formatUsd(a.totals.totalCost)}`
-        )
-      );
+          i18n.t('analytics.copyAgentLine', {
+            id,
+            tokens: formatTokens(a.totals.totalTokens),
+            cost: formatUsd(a.totals.totalCost),
+          })
+        );
+      });
     lines.push('');
   }
 
   if (byModel.length > 0) {
-    lines.push('By Model:');
+    lines.push(i18n.t('analytics.copyByModel'));
     [...byModel]
       .sort((a, b) => b.totals.totalCost - a.totals.totalCost)
-      .forEach((m) =>
+      .forEach((m) => {
+        const callsLabel = `${m.count} ${i18n.t('analytics.calls')}`;
         lines.push(
-          `  ${shortModel(m.model)}: ${m.count} calls — ${formatTokens(m.totals.totalTokens)} — ${formatUsd(m.totals.totalCost)}`
-        )
-      );
+          i18n.t('analytics.copyModelLine', {
+            model: shortModel(m.model),
+            callsLabel,
+            tokens: formatTokens(m.totals.totalTokens),
+            cost: formatUsd(m.totals.totalCost),
+          })
+        );
+      });
   }
 
   await navigator.clipboard.writeText(lines.join('\n'));

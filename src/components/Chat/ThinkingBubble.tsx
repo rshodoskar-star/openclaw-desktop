@@ -5,7 +5,7 @@
 //   1. Live streaming — expanded, shimmer border, text updating real-time
 //   2. Finalized — collapsed by default, click to expand
 //
-// Matches AEGIS Desktop design system (glass, subtle colors)
+// Matches OpenClaw Station design system (glass, subtle colors)
 // ═══════════════════════════════════════════════════════════
 
 import { useState, useRef, useEffect } from 'react';

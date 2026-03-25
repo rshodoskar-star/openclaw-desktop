@@ -49,7 +49,7 @@ const translations: Record<string, LangMap> = {
       imageSaved: '图片已保存',
     },
     tray: {
-      open:  'Æ 打开 AEGIS',
+      open:  'Æ 打开 OpenClaw Station',
       close: '❌ 退出',
     },
   },
@@ -71,7 +71,7 @@ const translations: Record<string, LangMap> = {
       imageSaved: 'تم حفظ الصورة',
     },
     tray: {
-      open:  'Æ فتح AEGIS',
+      open:  'Æ فتح OpenClaw Station',
       close: '❌ إغلاق',
     },
   },

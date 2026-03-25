@@ -317,7 +317,7 @@ export function McpToolsPage() {
           </div>
           <p className="text-[11px] text-aegis-text-dim mt-1.5">
             Connect external tools via Model Context Protocol (MCP). GitHub, Slack, Google,
-            databases, and more — directly from AEGIS Desktop.
+            databases, and more — directly from openmcp.cn.
           </p>
         </div>
 

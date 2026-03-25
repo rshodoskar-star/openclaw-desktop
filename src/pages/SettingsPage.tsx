@@ -622,7 +622,7 @@ export function SettingsPageFull() {
       <GlassCard delay={0.3}>
         <div className="text-center py-4 mb-4">
           <div className="text-3xl mb-2">Æ</div>
-          <div className="text-[14px] font-bold text-aegis-text">AEGIS Desktop</div>
+          <div className="text-[14px] font-bold text-aegis-text">OpenClaw Station</div>
           <div className="text-[12px] text-aegis-text-dim mt-1">v{APP_VERSION}</div>
           <div className="text-[11px] text-aegis-text-dim mt-0.5">Advanced Executive General Intelligence System</div>
         </div>
@@ -640,7 +640,7 @@ export function SettingsPageFull() {
           ))}
         </div>
         <button onClick={() => {
-          const info = `AEGIS Desktop v${APP_VERSION}\nPlatform: ${navigator.platform}\nModel: ${mainModel}\nGateway: ${connected ? 'connected' : 'disconnected'}`;
+          const info = `OpenClaw Station v${APP_VERSION}\nPlatform: ${navigator.platform}\nModel: ${mainModel}\nGateway: ${connected ? 'connected' : 'disconnected'}`;
           navigator.clipboard?.writeText(info);
         }}
           className="mt-3 flex items-center gap-1.5 mx-auto px-3 py-1.5 rounded-lg text-[11px] text-aegis-text-dim hover:text-aegis-text border border-aegis-border/20 hover:border-aegis-border/40 transition-colors">

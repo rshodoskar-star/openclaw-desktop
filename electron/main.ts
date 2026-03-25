@@ -28,7 +28,7 @@ try {
 }
 
 // Windows requires AppUserModelId for desktop notifications (especially in dev mode)
-app.setAppUserModelId('com.aegis.desktop');
+app.setAppUserModelId('cn.openmcp.openclaw.station');
 
 // ═══════════════════════════════════════════════════════════
 // Device Identity (Ed25519) — Required for Gateway operator scopes
@@ -238,7 +238,7 @@ function createSplashWindow(): void {
     </head>
     <body>
       <div class="logo">A</div>
-      <div class="title">AEGIS Desktop</div>
+      <div class="title">OpenClaw Station</div>
       <div class="subtitle">${t('splash.loading')}</div>
       <div class="spinner"></div>
     </body>
@@ -447,7 +447,7 @@ function setupIPC(): void {
   });
 
   // TODO(v6): Unify config storage — currently aegis-config.json and localStorage
-  // can drift. See Bug #10 in AEGIS Desktop backlog (memory #1689).
+  // can drift. See Bug #10 in OpenClaw Station backlog (memory #1689).
   // ── Settings: sync individual key from UI (localStorage) → aegis-config.json ──
   ipcMain.handle('settings:save', (_e, key: string, value: any) => {
     const configKeyMap: Partial<Record<string, keyof AegisConfig>> = {
@@ -626,7 +626,7 @@ function setupIPC(): void {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           clientId: 'openclaw-control-ui',
-          clientName: 'AEGIS Desktop',
+          clientName: 'OpenClaw Station',
           platform: process.platform,
           scopes: ['operator.read', 'operator.write', 'operator.admin'],
         }),
@@ -678,7 +678,7 @@ function setupIPC(): void {
           height: 800,
           minWidth: 600,
           minHeight: 400,
-          title: `AEGIS Preview — ${data.title}`,
+          title: `OpenClaw Station Preview — ${data.title}`,
           backgroundColor: '#0d1117',
           autoHideMenuBar: true,
           webPreferences: {
@@ -699,7 +699,7 @@ function setupIPC(): void {
       } else {
         // Window exists — update content and focus
         previewWindow.webContents.send('artifact:content', data);
-        previewWindow.setTitle(`AEGIS Preview — ${data.title}`);
+        previewWindow.setTitle(`OpenClaw Station Preview — ${data.title}`);
         previewWindow.focus();
       }
 
@@ -991,7 +991,7 @@ function setupIPC(): void {
         thumbnailSize: { width: 400, height: 280 },
         fetchWindowIcons: true,
       });
-      // Return all windows (including AEGIS Desktop)
+      // Return all windows (including OpenClaw Station)
       return sources
         .filter((s) => s.thumbnail && !s.thumbnail.isEmpty())
         .map((s) => ({
@@ -1006,7 +1006,7 @@ function setupIPC(): void {
 
   ipcMain.handle('screenshot:captureWindow', async (_e, windowId: string) => {
     try {
-      // For AEGIS own window, use native capture
+      // For OpenClaw Station own window, use native capture
       const ownWindowId = `window:${mainWindow!.getMediaSourceId()}`;
       const isOwnWindow = windowId === ownWindowId || windowId.includes(String(mainWindow!.id));
 
@@ -1040,7 +1040,7 @@ function setupIPC(): void {
       }
 
       // For other windows — get high-res thumbnail
-      // Minimize AEGIS briefly so it doesn't cover the target
+      // Minimize OpenClaw Station briefly so it doesn't cover the target
       const wasVisible = mainWindow!.isVisible() && !mainWindow!.isMinimized();
       if (wasVisible) mainWindow!.minimize();
       await new Promise((r) => setTimeout(r, 400));
@@ -1051,7 +1051,7 @@ function setupIPC(): void {
       });
       const source = sources.find((s) => s.id === windowId);
 
-      // Restore AEGIS
+      // Restore OpenClaw Station
       if (wasVisible) {
         mainWindow!.restore();
         mainWindow!.focus();
@@ -1405,5 +1405,5 @@ app.on('before-quit', () => {
   ptyProcesses.clear();
 });
 
-console.log('Æ AEGIS Desktop v5.6.0 started');
+console.log('Æ OpenClaw Station v5.6.0 started');
 

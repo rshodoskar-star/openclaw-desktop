@@ -1,4 +1,4 @@
-// AEGIS Desktop — Global Type Declarations
+// OpenClaw Station — Global Type Declarations
 
 interface AegisAPI {
   /** Installer-selected language (set by NSIS setup wizard) */

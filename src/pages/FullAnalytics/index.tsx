@@ -81,33 +81,35 @@ export function FullAnalyticsPage() {
   // Render
   // ─────────────────────────────────────────────────────────
   return (
-    <PageTransition className="p-6 space-y-5 max-w-[1200px] mx-auto">
+    <PageTransition className="p-6 space-y-5 mx-auto">
 
       {/* ══ Header ══ */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-[24px] font-extrabold text-aegis-text tracking-tight flex items-center gap-3">
             <Activity size={22} className="text-aegis-accent" />
-            {t('analytics.title', 'Costs — Full Analytics')}
+            {t('analytics.title')}
           </h1>
           <p className="text-[12px] text-aegis-text-muted mt-1 flex items-center gap-2">
             {connected ? (
               <>
                 <span className="w-1.5 h-1.5 rounded-full bg-aegis-success inline-block animate-pulse" />
                 {activePreset === 'all'
-                  ? t('analytics.liveData',         'Live data — all-time statistics')
-                  : t('analytics.liveDataFiltered', 'Live data — filtered range')}
+                  ? t('analytics.liveData')
+                  : t('analytics.liveDataFiltered')}
               </>
             ) : (
               <>
                 <span className="w-1.5 h-1.5 rounded-full bg-aegis-danger inline-block" />
-                {t('analytics.disconnected', 'Disconnected — showing cached data')}
+                {t('analytics.disconnected')}
               </>
             )}
             {periodInfo.days > 0 && (
               <>
                 <span className="text-aegis-text-dim">·</span>
-                <span className="text-aegis-text-dim font-mono">{periodInfo.days} days</span>
+                <span className="text-aegis-text-dim font-mono">
+                  {t('analytics.daysCount', { count: periodInfo.days })}
+                </span>
                 <span className="text-aegis-text-dim">·</span>
                 <span className="text-aegis-text-dim font-mono">{periodInfo.start}</span>
                 <span className="text-aegis-text-dim">→</span>
@@ -129,7 +131,7 @@ export function FullAnalyticsPage() {
             onClick={handleRefresh}
             disabled={manualRefreshing || isRefetching}
             className="p-1.5 rounded-lg hover:bg-[rgb(var(--aegis-overlay)/0.06)] transition-colors"
-            title="Refresh"
+            title={t('analytics.refresh')}
           >
             <RefreshCw
               size={15}
@@ -165,9 +167,7 @@ export function FullAnalyticsPage() {
       {totals.missingCostEntries > 0 && (
         <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-aegis-warning/15 bg-aegis-warning/[0.04] text-[11px] text-aegis-warning/70">
           <AlertTriangle size={14} className="shrink-0" />
-          {t('analytics.missingPricing', '{{count}} entries use unknown models — some costs may be incomplete.', {
-            count: totals.missingCostEntries,
-          })}
+          {t('analytics.missingPricing', { count: totals.missingCostEntries })}
         </div>
       )}
 
@@ -214,8 +214,8 @@ export function FullAnalyticsPage() {
           <Activity size={40} className="text-aegis-text-dim mb-4" />
           <p className="text-aegis-text-dim text-[14px]">
             {connected
-              ? t('analytics.noData',       'No analytics data available yet.')
-              : t('analytics.connectFirst', 'Connect to Gateway to view analytics.')}
+              ? t('analytics.noData')
+              : t('analytics.connectFirst')}
           </p>
         </div>
       )}

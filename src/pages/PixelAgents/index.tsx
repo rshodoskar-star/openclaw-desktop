@@ -5,7 +5,7 @@ import { useAgentAdapter } from './useAgentAdapter';
 import { loadPixelAssets } from './assetLoader';
 
 // ──────────────────────────────────────────────────────────────
-// PixelAgentsPage — Virtual pixel-art office for AEGIS Desktop
+// PixelAgentsPage — Virtual pixel-art office for OpenClaw Station
 // Characters react to chat state (typing, waiting, tools).
 // ──────────────────────────────────────────────────────────────
 

@@ -22,28 +22,28 @@ export function TokenBreakdownSection({ totals }: TokenBreakdownSectionProps) {
 
   const segments = [
     {
-      label:  t('analytics.inputTokens',  'Input Tokens'),
+      label:  t('analytics.inputTokens'),
       tokens: totals.input,
       cost:   totals.inputCost,
       color:  dataColor(1),
       icon:   '📥',
     },
     {
-      label:  t('analytics.outputTokens', 'Output Tokens'),
+      label:  t('analytics.outputTokens'),
       tokens: totals.output,
       cost:   totals.outputCost,
       color:  dataColor(0),
       icon:   '📤',
     },
     {
-      label:  t('analytics.cacheRead',  'Cache Read'),
+      label:  t('analytics.cacheRead'),
       tokens: totals.cacheRead,
       cost:   totals.cacheReadCost,
       color:  dataColor(5),
       icon:   '🔄',
     },
     {
-      label:  t('analytics.cacheWrite', 'Cache Write'),
+      label:  t('analytics.cacheWrite'),
       tokens: totals.cacheWrite,
       cost:   totals.cacheWriteCost,
       color:  dataColor(2),
@@ -58,7 +58,7 @@ export function TokenBreakdownSection({ totals }: TokenBreakdownSectionProps) {
       <div className="flex items-center gap-2 mb-4">
         <Database size={14} className="text-aegis-success" />
         <span className="text-[10px] text-aegis-text-dim uppercase tracking-widest font-bold">
-          {t('analytics.tokenBreakdown', 'Token Breakdown')}
+          {t('analytics.tokenBreakdown')}
         </span>
       </div>
 
@@ -95,17 +95,20 @@ export function TokenBreakdownSection({ totals }: TokenBreakdownSectionProps) {
               </div>
               <div className="space-y-1 text-[11px]">
                 <div className="flex justify-between">
-                  <span className="text-aegis-text-muted">{t('analytics.tokens', 'Tokens')}</span>
+                  <span className="text-aegis-text-muted">{t('analytics.tokens')}</span>
                   <span className="font-mono font-bold text-aegis-text-secondary">{formatTokens(seg.tokens)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-aegis-text-muted">{t('analytics.cost', 'Cost')}</span>
+                  <span className="text-aegis-text-muted">{t('analytics.cost')}</span>
                   <span className="font-mono font-bold" style={{ color: seg.color }}>{formatUsd(seg.cost)}</span>
                 </div>
                 <div className="flex justify-between text-[10px]">
-                  <span className="text-aegis-text-dim">{t('analytics.ofTotal', '% of total')}</span>
+                  <span className="text-aegis-text-dim">{t('analytics.ofTotal')}</span>
                   <span className="text-aegis-text-muted font-mono">
-                    {costPct.toFixed(1)}% cost · {tokenPct.toFixed(1)}% tokens
+                    {t('analytics.pctCostTokens', {
+                      costPct: costPct.toFixed(1),
+                      tokenPct: tokenPct.toFixed(1),
+                    })}
                   </span>
                 </div>
               </div>
@@ -126,7 +129,7 @@ export function TokenBreakdownSection({ totals }: TokenBreakdownSectionProps) {
 
       {/* Total summary row */}
       <div className="mt-3 flex items-center justify-between px-3 py-2 rounded-lg bg-[rgb(var(--aegis-overlay)/0.03)] border border-[rgb(var(--aegis-overlay)/0.06)] text-[11px]">
-        <span className="text-aegis-text-muted font-bold">{t('analytics.total', 'Total')}</span>
+        <span className="text-aegis-text-muted font-bold">{t('analytics.total')}</span>
         <span className="font-mono font-bold text-aegis-text-secondary">{formatTokens(totals.totalTokens)}</span>
         <span className="text-aegis-text-dim">→</span>
         <span className="font-mono font-black text-aegis-text">{formatUsd(totals.totalCost)}</span>
@@ -136,9 +139,9 @@ export function TokenBreakdownSection({ totals }: TokenBreakdownSectionProps) {
       {totals.cacheRead > 0 && (
         <div className="mt-3 flex items-center gap-2 px-3 py-2 rounded-lg bg-aegis-success/[0.04] border border-aegis-success/10 text-[11px] text-aegis-success/70">
           <Database size={13} className="shrink-0" />
-          {t('analytics.cacheSavings', 'Cache read')}{' '}
+          {t('analytics.cacheSavings')}{' '}
           <strong className="font-mono mx-1">{formatTokens(totals.cacheRead)}</strong>
-          {t('analytics.cacheAtReduced', 'tokens at reduced rate — significant savings!')}
+          {t('analytics.cacheAtReduced')}
         </div>
       )}
     </GlassCard>
