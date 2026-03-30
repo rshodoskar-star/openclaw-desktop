@@ -22,6 +22,8 @@ export function detectPlatform(): string {
 export function getAppLocale(): string {
   const lang = i18n.language || 'en';
   if (lang.startsWith('ar')) return 'ar-SA';
+  if (lang.startsWith('zh')) return 'zh-CN';
+  if (lang.startsWith('es')) return 'es-ES';
   return 'en-US';
 }
 

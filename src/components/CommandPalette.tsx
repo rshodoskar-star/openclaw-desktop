@@ -31,6 +31,8 @@ interface PaletteCommand {
   action: () => void;
 }
 
+const TOGGLE_LANGUAGES = ['en', 'zh', 'ar', 'es'] as const;
+
 export function CommandPalette() {
   const { t } = useTranslation();
   const { commandPaletteOpen, setCommandPaletteOpen, language, setLanguage, notificationsEnabled, setNotificationsEnabled } = useSettingsStore();
@@ -73,7 +75,9 @@ export function CommandPalette() {
 
     // ── Settings ──
     { id: 'set-lang', icon: Globe, name: t('palette.toggleLanguage'), keywords: ['language', 'لغة', 'english', 'عربي'], action: () => {
-      const newLang = language === 'ar' ? 'en' : 'ar';
+      const currentIndex = TOGGLE_LANGUAGES.indexOf(language);
+      const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % TOGGLE_LANGUAGES.length;
+      const newLang = TOGGLE_LANGUAGES[nextIndex];
       setLanguage(newLang);
       changeLanguage(newLang);
     }},

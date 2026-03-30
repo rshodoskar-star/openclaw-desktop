@@ -104,7 +104,8 @@
       "include": "installer/nsis-script.nsh",
       "installerLanguages": [
         "en_US",
-        "ar_SA"
+        "ar_SA",
+        "zh_CN"
       ]
     },
     "directories": {

@@ -33,6 +33,12 @@ import { gateway } from '@/services/gateway/index';
 import { notifications } from '@/services/notifications';
 import { changeLanguage } from '@/i18n';
 
+type InstallerLanguage = 'ar' | 'en' | 'zh' | 'es';
+
+function isInstallerLanguage(value: unknown): value is InstallerLanguage {
+  return value === 'ar' || value === 'en' || value === 'zh' || value === 'es';
+}
+
 // ═══════════════════════════════════════════════════════════
 // AEGIS Desktop v4.0 — Mission Control
 // ═══════════════════════════════════════════════════════════
@@ -275,8 +281,8 @@ export default function App() {
           const httpUrl = wsUrl.replace(/^ws:/, 'http:').replace(/^wss:/, 'https:');
           setGatewayHttpUrl(httpUrl);
           localStorage.setItem('aegis-gateway-http', httpUrl);
-          if (!localStorage.getItem('aegis-language') && config.installerLanguage) {
-            const lang = config.installerLanguage as 'ar' | 'en';
+          if (!localStorage.getItem('aegis-language') && isInstallerLanguage(config.installerLanguage)) {
+            const lang = config.installerLanguage;
             changeLanguage(lang);
             useSettingsStore.getState().setLanguage(lang);
           }

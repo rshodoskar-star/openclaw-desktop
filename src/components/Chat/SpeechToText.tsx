@@ -44,7 +44,14 @@ export function SpeechToText({ onResult, onCancel }: SpeechToTextProps) {
     // Configure
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = language === 'ar' ? 'ar-SA' : 'en-US';
+    recognition.lang =
+      language === 'ar'
+        ? 'ar-SA'
+        : language === 'zh'
+          ? 'zh-CN'
+          : language === 'es'
+            ? 'es-ES'
+            : 'en-US';
 
     recognition.onstart = () => {
       setListening(true);

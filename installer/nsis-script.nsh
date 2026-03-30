@@ -24,10 +24,15 @@
   WriteRegStr SHCTX "Software\AEGIS Desktop" "Version" "${VERSION}"
 
   ; Save selected language for the app to read on first launch
-  ; Arabic = 1025, English = 1033
+  ; Arabic = 1025, Simplified Chinese = 2052, English = 1033
   StrCmp $LANGUAGE 1025 0 +4
     FileOpen $0 "$INSTDIR\resources\language.txt" w
     FileWrite $0 "ar"
+    FileClose $0
+    Goto langDone
+  StrCmp $LANGUAGE 2052 0 +4
+    FileOpen $0 "$INSTDIR\resources\language.txt" w
+    FileWrite $0 "zh"
     FileClose $0
     Goto langDone
   FileOpen $0 "$INSTDIR\resources\language.txt" w

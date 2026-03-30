@@ -173,7 +173,7 @@ function detectInstallerLanguage(): void {
     const langFile = path.join(process.resourcesPath, 'language.txt');
     if (fs.existsSync(langFile)) {
       const lang = fs.readFileSync(langFile, 'utf-8').trim();
-      if (lang === 'ar' || lang === 'en') installerLangGlobal = lang;
+      if (lang === 'ar' || lang === 'en' || lang === 'zh' || lang === 'es') installerLangGlobal = lang;
     }
   } catch { /* dev mode — no resources dir */ }
 }

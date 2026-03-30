@@ -2,7 +2,7 @@
 
 interface AegisAPI {
   /** Installer-selected language (set by NSIS setup wizard) */
-  installerLanguage?: 'ar' | 'en';
+  installerLanguage?: 'ar' | 'en' | 'zh' | 'es';
   window: {
     minimize: () => Promise<void>;
     maximize: () => Promise<boolean>;
